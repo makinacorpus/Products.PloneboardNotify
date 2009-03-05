@@ -1,7 +1,20 @@
 <configure
     xmlns="http://namespaces.zope.org/zope"
     xmlns:five="http://namespaces.zope.org/five"
-    i18n_domain="Products.PloneboardNotify">
+	xmlns:zcml="http://namespaces.zope.org/zcml"
+    xmlns:gs="http://namespaces.zope.org/genericsetup"
+    i18n_domain="plone">
 
+  <gs:registerProfile
+      name="default"
+      title="Ploneboard Notify"
+      directory="profiles/default"
+      description="Ploneboard notification system"
+      provides="Products.GenericSetup.interfaces.EXTENSION"
+      />
+
+  <include package=".events"
+           zcml:condition="installed Products.Ploneboard"
+  />
 
 </configure>
