@@ -2,4 +2,7 @@
 <metadata>
   <description>Notification feature for Ploneboard</description>
   <version>0.1.0</version>
+  <dependencies>
+    <dependency>profile-Products.Ploneboard:default</dependency>
+  </dependencies>
 </metadata>

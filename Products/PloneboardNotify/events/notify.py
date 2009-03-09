@@ -6,7 +6,7 @@ from email.Header import Header
 from email.MIMEMultipart import MIMEMultipart
 from email.Utils import COMMASPACE, formatdate
 
-from Products.Archetypes import PloneMessageFactory as _
+#from Products.Archetypes import PloneMessageFactory as _
 from Products.CMFCore.utils import getToolByName
 
 def _getAllValidEmailsFromGroup(putils, acl_users, group):
@@ -76,6 +76,7 @@ def SendMail(object, event):
                                           default=msg_txt,
                                           context=object)
     text += "<br/>" + object.REQUEST.form['text'].decode('utf-8')
+    text += "<hr/>" + object.absolute_url()
 
     server = portal.MailHost.smtp_host
     header_charset = 'ISO-8859-1'

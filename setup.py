@@ -25,6 +25,7 @@ setup(name='Products.PloneboardNotify',
       zip_safe=False,
       install_requires=[
           'setuptools',
+          'Products.Ploneboard',
           # -*- Extra requirements: -*-
       ],
       entry_points="""
