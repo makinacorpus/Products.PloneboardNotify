@@ -5,6 +5,11 @@
     xmlns:gs="http://namespaces.zope.org/genericsetup"
     i18n_domain="plone">
 
+  <include file="skins.zcml" />
+  <include package=".browser"
+           zcml:condition="installed Products.Ploneboard"
+  />
+
   <gs:registerProfile
       name="default"
       title="Ploneboard Notify"

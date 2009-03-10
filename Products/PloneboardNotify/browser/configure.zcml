@@ -11,10 +11,5 @@
       permission="cmf.ManagePortal"
       />
 
-    <browser:resource
-        name="bell_board.gif"
-        image="bell_board.gif"
-        />
-
 
 </configure>
