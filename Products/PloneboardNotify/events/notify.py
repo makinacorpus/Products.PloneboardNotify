@@ -1,12 +1,4 @@
-import smtplib
-
-from email.MIMEText import MIMEText
-from email.MIMEBase import MIMEBase
-from email.Header import Header
-from email.MIMEMultipart import MIMEMultipart
-from email.Utils import COMMASPACE, formatdate
-
-#from Products.Archetypes import PloneMessageFactory as _
+from Products.CMFPlone import PloneMessageFactory as _
 from Products.CMFCore.utils import getToolByName
 
 def _getAllValidEmailsFromGroup(putils, acl_users, group):
@@ -48,9 +40,10 @@ def _getSendToValues(object):
 
     return emails
 
-def SendMail(object, event):
+def sendMail(object, event):
     """A Zope3 event for sending emails"""
     portal = getToolByName(object,"portal_url").getPortalObject()
+    portal_transforms = getToolByName(object, "portal_transforms")
 
     send_from = portal.getProperty('email_from_address')
     if type(send_from)==tuple and send_from:
@@ -59,9 +52,6 @@ def SendMail(object, event):
     send_to = _getSendToValues(object)
     
     translation_service = getToolByName(object,'translation_service')
-    
-    #subject = _(u'A new message has been added on the forum ') + ('"%s"' % object.aq_parent.Title())
-    #text = _("The new message is:<br />") + object.REQUEST.form['text']
     
     msg_sbj = u"New message added on the forum "
     subject = translation_service.utranslate(domain='plone',
@@ -75,24 +65,17 @@ def SendMail(object, event):
                                           msgid=msg_txt,
                                           default=msg_txt,
                                           context=object)
-    text += "<br/>" + object.REQUEST.form['text'].decode('utf-8')
-    text += "<hr/>" + object.absolute_url()
-
-    server = portal.MailHost.smtp_host
-    header_charset = 'ISO-8859-1'
-    body_charset = 'utf-8'
-    #msg = MIMEText(text, 'html')
-    msg = MIMEText(text.encode(body_charset), 'html', body_charset)
-    msg.set_charset(body_charset)
-    msg['From'] = send_from
-    msg['To'] = COMMASPACE.join(send_to)
-    msg['Date'] = formatdate(localtime=True)
-    msg['Subject'] = Header(unicode(subject), header_charset)
+    
+    data_body_to_plaintext = portal_transforms.convert("html_to_web_intelligent_plain_text", object.REQUEST.form['text'])
+    body_to_plaintext = data_body_to_plaintext.getData()
+    
+    text += "\n\n" + body_to_plaintext.decode('utf-8')
+    text += "\n\n" + object.absolute_url()
+    
+    mail_host = getToolByName(object, 'MailHost')
 
     try:
-        smtp = smtplib.SMTP(server)
-        smtp.sendmail(send_from, set(send_to), msg.as_string())
-        smtp.close()
+        mail_host.secureSend(text.encode('iso-8859-1'), mto=send_to, mfrom=send_from, subject=subject, encode="utf-8")
     except Exception, inst:
         putils = getToolByName(object,'plone_utils')
         putils.addPortalMessage('Not able to send notifications', type='warning')

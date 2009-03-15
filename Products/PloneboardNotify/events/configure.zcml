@@ -6,7 +6,7 @@
  
   <subscriber for="Products.Ploneboard.interfaces.IComment
                    zope.app.container.interfaces.IObjectAddedEvent"
-                   handler=".notify.SendMail"
+                   handler=".notify.sendMail"
 				   zcml:condition="installed Products.PloneboardNotify"
             />
 
