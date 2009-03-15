@@ -75,7 +75,10 @@ def sendMail(object, event):
     mail_host = getToolByName(object, 'MailHost')
 
     try:
-        mail_host.secureSend(text.encode('iso-8859-1'), mto=send_to, mfrom=send_from, subject=subject, encode="utf-8")
+        object.plone_log("Notification from message %s sent to %s" % (object.absolute_url_path(), ",".join(send_to)))
+        mail_host.secureSend(text.encode('iso-8859-1'), mto=[], mfrom=send_from,
+                             subject=subject.encode('iso-8859-1'),
+                             encode="utf-8", mbcc=send_to)
     except Exception, inst:
         putils = getToolByName(object,'plone_utils')
         putils.addPortalMessage('Not able to send notifications', type='warning')

@@ -7,7 +7,6 @@
       name="ploneboard_notification"
       for="Products.CMFPlone.interfaces.IPloneSiteRoot"
       class=".ploneboard_notification.PloneboardNotificationSystemView"
-	  template="ploneboard_notification.pt"
       permission="cmf.ManagePortal"
       />
 

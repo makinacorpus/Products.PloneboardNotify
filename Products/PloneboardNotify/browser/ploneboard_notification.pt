@@ -30,7 +30,8 @@
 		      Handle global site configuration, applied to every forum.
 		    </p>
 			
-			<input type="checkbox" id="sendto_all" name="sendto_all" />
+			<input type="checkbox" id="sendto_all" name="sendto_all"
+			       tal:attributes="checked view/load_sendto_all"/>
 			<label for="sendto_all" i18n:translate="pbn_sendto_all_label">Send to all?</label>
 			<div class="formHelp" i18n:translate="pbn_sendto_all_help">
 				If checked, send a mail to every user of the portal at every new thread or responses
@@ -50,7 +51,8 @@
 				to other recipients.
 				</span>				
 			</div>
-			<textarea name="sendto_values" id="sendto_values" rows="5" cols="15"></textarea>
+			<textarea name="sendto_values" id="sendto_values" rows="5" cols="15"
+			          tal:content="view/load_sendto_values"></textarea>
 
 			<div class="visualPadding">&nbsp;</div>
 			<input type="submit" name="pbn_save" value="Save" class="context" />
