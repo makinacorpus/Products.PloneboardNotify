@@ -8,7 +8,7 @@ from Products.Ploneboard.interfaces import IPloneboard
 from Products.PloneboardNotify.interfaces import ILocalBoardNotify
 
 class PloneboardNotificationSystemView(BrowserView):
-    """View for the form that dump contents in a valid FSS format onto server filesystem"""
+    """View for managing Ploneboard notification system in control panel"""
     
     def __init__(self, context, request):
         BrowserView.__init__(self, context, request)
