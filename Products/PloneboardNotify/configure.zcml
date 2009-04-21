@@ -3,9 +3,8 @@
     xmlns:five="http://namespaces.zope.org/five"
 	xmlns:zcml="http://namespaces.zope.org/zcml"
     xmlns:gs="http://namespaces.zope.org/genericsetup"
-    i18n_domain="plone">
+    i18n_domain="Products.PloneboardNotify">
 
-  <include file="skins.zcml" />
   <include package=".browser"
            zcml:condition="installed Products.Ploneboard"
   />

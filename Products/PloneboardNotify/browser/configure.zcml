@@ -1,7 +1,12 @@
 <configure
    xmlns="http://namespaces.zope.org/zope"
    xmlns:browser="http://namespaces.zope.org/browser"
-   i18n_domain="plone">
+   i18n_domain="Products.PloneboardNotify">
+
+    <browser:resource
+        name="bell_board.gif"
+        file="bell_board.gif"
+        />
 
     <browser:page
       name="ploneboard_notification"

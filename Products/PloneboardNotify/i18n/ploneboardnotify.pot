@@ -13,7 +13,7 @@ msgstr ""
 "Language-code: en\n"
 "Language-name: English\n"
 "Preferred-encodings:latin1 utf-8\n"
-"Domain: plone\n"
+"Domain: Products.PloneboardNotify\n"
 
 msgid "New message added on the forum "
 msgstr ""

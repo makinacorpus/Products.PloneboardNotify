@@ -5,12 +5,14 @@
       xmlns:metal="http://xml.zope.org/namespaces/metal"
       xmlns:i18n="http://xml.zope.org/namespaces/i18n"
       metal:use-macro="here/prefs_main_template/macros/master"
-      i18n:domain="plone">
+      i18n:domain="Products.PloneboardNotify">
 
       
 <body>
 
 <metal:main fill-slot="prefs_configlet_content">
+
+<div id="region-content" class="documentContent">
 
 	<h1 class="documentFirstHeading"
         i18n:translate="pbn_paneltitle">
@@ -60,6 +62,7 @@
 		</fieldset>
 	</form>
 
+</div>
 
 </metal:main>
 

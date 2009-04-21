@@ -54,14 +54,14 @@ def sendMail(object, event):
     translation_service = getToolByName(object,'translation_service')
     
     msg_sbj = u"New message added on the forum "
-    subject = translation_service.utranslate(domain='plone',
+    subject = translation_service.utranslate(domain='Products.PloneboardNotify',
                                              msgid=msg_sbj,
                                              default=msg_sbj,
                                              context=object)
     subject+= object.aq_parent.Title().decode('utf-8')
 
     msg_txt = u"The new message is:"
-    text = translation_service.utranslate(domain='plone',
+    text = translation_service.utranslate(domain='Products.PloneboardNotify',
                                           msgid=msg_txt,
                                           default=msg_txt,
                                           context=object)
