@@ -42,6 +42,8 @@ def _getSendToValues(object):
 
 def sendMail(object, event):
     """A Zope3 event for sending emails"""
+    ploneboard_notify_properties = getToolByName(object,'portal_properties')['ploneboard_notify_properties']
+    debug_mode = ploneboard_notify_properties.debug_mode
     portal = getToolByName(object,"portal_url").getPortalObject()
     portal_transforms = getToolByName(object, "portal_transforms")
 
@@ -75,10 +77,14 @@ def sendMail(object, event):
     mail_host = getToolByName(object, 'MailHost')
 
     try:
-        object.plone_log("Notification from message %s sent to %s" % (object.absolute_url_path(), ",".join(send_to)))
-        mail_host.secureSend(text.encode('iso-8859-1'), mto=[], mfrom=send_from,
-                             subject=subject.encode('iso-8859-1'),
-                             encode="utf-8", mbcc=send_to)
+        if debug_mode:
+            object.plone_log("Notification from message subject: %s" % subject.encode('iso-8859-1'))
+            object.plone_log("Notification from message text: %s" % text.encode('iso-8859-1'))
+            object.plone_log("Notification from message %s sent to %s" % (object.absolute_url_path(), ",".join(send_to)))
+        else:
+            mail_host.secureSend(text.encode('iso-8859-1'), mto=[], mfrom=send_from,
+                                 subject=subject.encode('iso-8859-1'),
+                                 encode="utf-8", mbcc=send_to)
     except Exception, inst:
         putils = getToolByName(object,'plone_utils')
         putils.addPortalMessage('Not able to send notifications', type='warning')

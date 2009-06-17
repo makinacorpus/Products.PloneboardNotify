@@ -4,5 +4,6 @@
   <property name="title">PloneboardNotify properties</property>
   <property name="sendto_all" type="boolean">False</property>
   <property name="sendto_values" type="lines"/>
+  <property name="debug_mode" type="boolean"/>
  </object>
 </object>
