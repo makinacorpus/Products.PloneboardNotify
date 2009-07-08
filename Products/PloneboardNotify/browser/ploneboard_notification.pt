@@ -19,6 +19,13 @@
     		Ploneboard notifications
 	</h1>
 
+    <a href=""
+       class="link-parent"
+       tal:attributes="href string:$portal_url/plone_control_panel"
+       i18n:translate="label_up_to_plone_setup">
+    Up to Site Setup
+    </a>
+
     <p i18n:translate="pbn_panelhelp">
       Here you can act on events that can send email when a new thread or post is added
 	  to forums.
@@ -61,6 +68,31 @@
 
 		</fieldset>
 	</form>
+
+	<fieldset>
+		<legend i18n:translate="pbn_local_conf_legend">Local configuration for forums</legend>
+
+	    <p i18n:translate="pbn_local_configuration_help">
+	      Specify here local configuration for every forums.
+	    </p>
+
+		<tal:forumareas repeat="area view/portal_boards">
+			<dt><a tal:attributes="href area/getURL"
+			       tal:content="area/Title">Area forum 1</a></dt>
+			<dd tal:repeat="forum python:view.getForums(area)">
+				<tal:forum define="localEnabled python:view.isLocalEnabled(forum)">
+					<tal:local-handled condition="localEnabled">
+						<a tal:attributes="href forum/getURL"
+						   tal:content="forum/Title">Forum inside</a>
+					</tal:local-handled>
+					<tal:not-local-handled condition="not:localEnabled">
+						<a tal:attributes="href string:${forum/getURL}/@@ploneboard_notification"
+						   tal:content="forum/Title">Forum inside</a>
+					</tal:not-local-handled>
+				</tal:forum>
+			</dd>
+		</tal:forumareas>
+	</fieldset>
 
 </div>
 

@@ -17,9 +17,9 @@
 
     <browser:page
       name="ploneboard_notification"
-      for="Products.PloneboardNotify.interfaces.ILocalBoardNotify"
-      class=".ploneboard_notification.PloneboardNotificationSystemView"
-      permission="cmf.ManagePortal"
+      for="Products.Ploneboard.interfaces.IForum"
+      class=".ploneboard_notification_forum.PloneboardNotificationSystemView"
+      permission="cmf.ModifyPortalContent"
       />
 
 

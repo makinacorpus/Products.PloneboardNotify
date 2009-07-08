@@ -5,7 +5,7 @@ from Products.Five.browser import BrowserView
 from Products.Five.browser.pagetemplatefile import ZopeTwoPageTemplateFile # Plone 2.5 compatibility
 from Products.CMFCore.utils import getToolByName
 
-from Products.Ploneboard.interfaces import IPloneboard
+from Products.Ploneboard.interfaces import IPloneboard, IForum
 from Products.PloneboardNotify.interfaces import ILocalBoardNotify
 
 class PloneboardNotificationSystemView(BrowserView):
@@ -40,7 +40,20 @@ class PloneboardNotificationSystemView(BrowserView):
     def portal_boards(self):
         """Perform a catalog search for all ploneboard objects in the portal"""
         catalog = getToolByName(self.context, 'portal_catalog')
-        return catalog(object_provides=IPloneboard.__identifier__)
+        return catalog(object_provides=IPloneboard.__identifier__,
+                       object_implements=IPloneboard.__identifier__,)
+
+    def getForums(self, area_brain):
+        """Return all forums inside the area forum passed"""
+        catalog = getToolByName(self.context, 'portal_catalog')
+        return catalog(object_provides=IForum.__identifier__,
+                       object_implements=IForum.__identifier__,
+                       path='/'.join(area_brain.getPhysicalPath()))
+
+    def isLocalEnabled(self, forum_brain):
+        """Check is the Forum use local configuration, so if provides ILocalBoardNotify"""
+        forum = forum_brain.getObject()
+        return ILocalBoardNotify.providedBy(forum)
 
     def load_sendto_values(self):
         """Load the global ploneboard_notify_properties value"""
