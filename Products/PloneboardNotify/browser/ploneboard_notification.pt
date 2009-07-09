@@ -73,7 +73,7 @@
 		<legend i18n:translate="pbn_local_conf_legend">Local configuration for forums</legend>
 
 	    <p i18n:translate="pbn_local_configuration_help">
-	      Specify here local configuration for every forums.
+	      Access local settings for every forum.
 	    </p>
 
 		<tal:forumareas repeat="area view/portal_boards">

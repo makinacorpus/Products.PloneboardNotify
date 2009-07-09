@@ -10,7 +10,6 @@ from StringIO import StringIO
 
 from Products.PloneboardNotify import config
 
-
 def install(self, reinstall=False):
     out = StringIO()
 

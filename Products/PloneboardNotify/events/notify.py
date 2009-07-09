@@ -1,9 +1,27 @@
+# -*- coding: utf-8 -*-
+
 from Products.CMFPlone import PloneMessageFactory as _
 from Products.CMFCore.utils import getToolByName
+
+from zope import interface
+from Products.PloneboardNotify.interfaces import ILocalBoardNotify
 
 def _getAllValidEmailsFromGroup(putils, acl_users, group):
     """Look at every user in the group, return all valid emails"""
     return [m.getProperty('email') for m in group.getGroupMembers() if putils.validateSingleEmailAddress(m.getProperty('email'))]
+
+def _getConfiguration(object):
+    """Return the local or global configuration settings for notify"""
+    if not ILocalBoardNotify.providedBy(object):
+        ploneboard_notify_properties = getToolByName(object,'portal_properties')['ploneboard_notify_properties']
+        sendto_all = ploneboard_notify_properties.sendto_all
+        sendto_values = ploneboard_notify_properties.sendto_values
+    else:
+        # Local configuration
+        sendto_all = object.getProperty('forum_sendto_all', False)
+        sendto_values = object.getProperty('forum_sendto_values', [])
+    return sendto_all, sendto_values
+
 
 def _getSendToValues(object):
     """Load the portal configuration for the notify system and obtain a list of emails.
@@ -11,9 +29,7 @@ def _getSendToValues(object):
     The sendto_values value is used to look for name of groups, then name on users in the portal and finally for normal emails.
     @return a list of emails
     """
-    ploneboard_notify_properties = getToolByName(object,'portal_properties')['ploneboard_notify_properties']
-    sendto_all = ploneboard_notify_properties.sendto_all
-    sendto_values = ploneboard_notify_properties.sendto_values
+    sendto_all, sendto_values = _getConfiguration(object)
     acl_users = getToolByName(object, 'acl_users')
     putils = getToolByName(object, 'plone_utils')
 
@@ -55,31 +71,46 @@ def sendMail(object, event):
     
     translation_service = getToolByName(object,'translation_service')
     
-    msg_sbj = u"New message added on the forum "
+    # Conversation or comment?
+    conversation = object.getConversation()
+    forum = conversation.getForum()
+    
+    msg_sbj = u"New comment added on the forum: "
     subject = translation_service.utranslate(domain='Products.PloneboardNotify',
                                              msgid=msg_sbj,
                                              default=msg_sbj,
                                              context=object)
-    subject+= object.aq_parent.Title().decode('utf-8')
+    subject+= forum.Title().decode('utf-8')
 
-    msg_txt = u"The new message is:"
+    msg_txt = u"Argument is: "
     text = translation_service.utranslate(domain='Products.PloneboardNotify',
                                           msgid=msg_txt,
                                           default=msg_txt,
                                           context=object)
+    text+=conversation.Title().decode('utf-8')+"\n"
+
+    msg_txt = u"The new message is:"
+    text += translation_service.utranslate(domain='Products.PloneboardNotify',
+                                          msgid=msg_txt,
+                                          default=msg_txt,
+                                          context=object)
     
-    data_body_to_plaintext = portal_transforms.convert("html_to_web_intelligent_plain_text", object.REQUEST.form['text'])
+    try:
+        data_body_to_plaintext = portal_transforms.convert("html_to_web_intelligent_plain_text", object.REQUEST.form['text'])
+    except:
+        # Plone 2.5.5
+        data_body_to_plaintext = portal_transforms.convert("html_to_text", object.REQUEST.form['text'])
     body_to_plaintext = data_body_to_plaintext.getData()
     
-    text += "\n\n" + body_to_plaintext.decode('utf-8')
-    text += "\n\n" + object.absolute_url()
+    text += "\n" + body_to_plaintext.decode('utf-8')
+    text += "\n" + object.absolute_url()
     
     mail_host = getToolByName(object, 'MailHost')
 
     try:
         if debug_mode:
             object.plone_log("Notification from message subject: %s" % subject.encode('iso-8859-1'))
-            object.plone_log("Notification from message text: %s" % text.encode('iso-8859-1'))
+            object.plone_log("Notification from message text:\n%s" % text.encode('iso-8859-1'))
             object.plone_log("Notification from message %s sent to %s" % (object.absolute_url_path(), ",".join(send_to)))
         else:
             mail_host.secureSend(text.encode('iso-8859-1'), mto=[], mfrom=send_from,
@@ -87,7 +118,7 @@ def sendMail(object, event):
                                  encode="utf-8", mbcc=send_to)
     except Exception, inst:
         putils = getToolByName(object,'plone_utils')
-        putils.addPortalMessage('Not able to send notifications', type='warning')
+        putils.addPortalMessage('Not able to send notifications')
         object.plone_log(str(inst))
 
 

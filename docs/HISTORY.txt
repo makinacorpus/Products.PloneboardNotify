@@ -5,6 +5,8 @@ Changelog
 -----
 
 * Added local configuration for the Forum content.
+* The forum title added in the mail was not the real forum title.
+* Added some other infos to the sent mail.
 
 0.2.0
 -----
