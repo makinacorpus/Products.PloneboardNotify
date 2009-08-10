@@ -75,6 +75,7 @@ def sendMail(object, event):
     conversation = object.getConversation()
     forum = conversation.getForum()
     
+    dummy = _(u"New comment added on the forum: ")
     msg_sbj = u"New comment added on the forum: "
     subject = translation_service.utranslate(domain='Products.PloneboardNotify',
                                              msgid=msg_sbj,
@@ -82,6 +83,7 @@ def sendMail(object, event):
                                              context=object)
     subject+= forum.Title().decode('utf-8')
 
+    dummy = _(u"Argument is: ")
     msg_txt = u"Argument is: "
     text = translation_service.utranslate(domain='Products.PloneboardNotify',
                                           msgid=msg_txt,
@@ -89,6 +91,7 @@ def sendMail(object, event):
                                           context=object)
     text+=conversation.Title().decode('utf-8')+"\n"
 
+    dummy = _(u"The new message is:")
     msg_txt = u"The new message is:"
     text += translation_service.utranslate(domain='Products.PloneboardNotify',
                                           msgid=msg_txt,
@@ -118,7 +121,7 @@ def sendMail(object, event):
                                  encode="utf-8", mbcc=send_to)
     except Exception, inst:
         putils = getToolByName(object,'plone_utils')
-        putils.addPortalMessage('Not able to send notifications')
+        putils.addPortalMessage(_(u'Not able to send notifications'))
         object.plone_log(str(inst))
 
 
