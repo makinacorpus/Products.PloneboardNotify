@@ -27,34 +27,55 @@ def _getSendToValues(object):
     """Load the portal configuration for the notify system and obtain a list of emails.
     If the sendto_all is True, the mail will be sent to all members of the Plone site.
     The sendto_values value is used to look for name of groups, then name on users in the portal and finally for normal emails.
-    @return a list of emails
+    @return a tuple with (cc emails, bcc emails) inside
     """
     sendto_all, sendto_values = _getConfiguration(object)
     acl_users = getToolByName(object, 'acl_users')
     putils = getToolByName(object, 'plone_utils')
 
     emails = []
+    emails_bcc = []
     if sendto_all:
         users = acl_users.getUsers()
-        emails.extend([m.getProperty('email') for m in users if putils.validateSingleEmailAddress(m.getProperty('email'))])
+        emails_bcc.extend([m.getProperty('email') for m in users if putils.validateSingleEmailAddress(m.getProperty('email'))])
     for entry in sendto_values:
+        if entry.startswith("#"):
+            # I also support comment inside the emails data
+            continue
+        inBcc = False
+        if entry.endswith("|bcc") or entry.endswith("|BCC"):
+            entry = entry[:-4]
+            inBcc = True 
         group = acl_users.getGroupById(entry)
         # 1 - is a group?
         if group:
-            emails.extend(_getAllValidEmailsFromGroup(putils, acl_users, group))
+            if inBcc:
+                emails_bcc.extend(_getAllValidEmailsFromGroup(putils, acl_users, group))
+            else:
+                emails.extend(_getAllValidEmailsFromGroup(putils, acl_users, group))                
             continue
         # 2 - is a member?
         user = acl_users.getUserById(entry)
         if user:
             email = user.getProperty('email')
             if putils.validateSingleEmailAddress(email):
-                emails.append(email)
+                if inBcc:
+                    emails_bcc.append(email)
+                else:
+                    emails.append(email)
             continue
         # 3 - is a valid email address?
         if putils.validateSingleEmailAddress(entry):
-            emails.append(entry)
-
-    return emails
+            if inBcc:
+                emails_bcc.append(entry)
+            else:
+                emails.append(entry)                
+            continue
+        # 4 - don't know how to handle this
+        print "Can't use the %s info to send notification" % entry
+    emails = set(emails)
+    emails_bcc = set(emails_bcc)
+    return [x for x in emails if x not in emails_bcc], list(emails_bcc)
 
 def sendMail(object, event):
     """A Zope3 event for sending emails"""
@@ -67,7 +88,7 @@ def sendMail(object, event):
     if type(send_from)==tuple and send_from:
         send_from = send_from[0]
        
-    send_to = _getSendToValues(object)
+    send_to, send_to_bcc = _getSendToValues(object)
     
     translation_service = getToolByName(object,'translation_service')
     
@@ -101,7 +122,7 @@ def sendMail(object, event):
     try:
         data_body_to_plaintext = portal_transforms.convert("html_to_web_intelligent_plain_text", object.REQUEST.form['text'])
     except:
-        # Plone 2.5.5
+        # Probably Plone 2.5.x
         data_body_to_plaintext = portal_transforms.convert("html_to_text", object.REQUEST.form['text'])
     body_to_plaintext = data_body_to_plaintext.getData()
     
@@ -114,15 +135,13 @@ def sendMail(object, event):
         if debug_mode:
             object.plone_log("Notification from message subject: %s" % subject.encode('iso-8859-1'))
             object.plone_log("Notification from message text:\n%s" % text.encode('iso-8859-1'))
-            object.plone_log("Notification from message %s sent to %s" % (object.absolute_url_path(), ",".join(send_to)))
+            object.plone_log("Notification from message sent to %s (and to %s in bcc)" % (", ".join(send_to) or 'no-one', ", ".join(send_to_bcc) or 'no-one'))
         else:
-            mail_host.secureSend(text.encode('iso-8859-1'), mto=[], mfrom=send_from,
-                                 subject=subject.encode('iso-8859-1'),
-                                 encode="utf-8", mbcc=send_to)
+            mail_host.secureSend(text.encode('iso-8859-1'), mto=send_to, mfrom=send_from,
+                                 subject=subject,
+                                 encode="utf-8", mbcc=send_to_bcc)
     except Exception, inst:
         putils = getToolByName(object,'plone_utils')
         putils.addPortalMessage(_(u'Not able to send notifications'))
         object.plone_log(str(inst))
-
-
 

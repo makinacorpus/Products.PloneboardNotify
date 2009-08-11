@@ -4,7 +4,7 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
-"POT-Creation-Date: 2009-08-10 22:22+0000\n"
+"POT-Creation-Date: 2009-08-11 09:08+0000\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI +ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -17,19 +17,24 @@ msgstr ""
 "Preferred-Encodings: utf-8 latin1\n"
 "Domain: Products.PloneboardNotify\n"
 
-#: ../events/notify.py:86
+#: ../events/notify.py:107
 msgid "Argument is: "
 msgstr ""
 
-#: ../events/notify.py:78
+#: ../events/notify.py:99
 msgid "New comment added on the forum: "
 msgstr ""
 
-#: ../events/notify.py:124
+#: ../events/notify.py:145
 msgid "Not able to send notifications"
 msgstr ""
 
-#: ../events/notify.py:94
+#. Default: "Save"
+#: ../browser/ploneboard_notification.pt:67
+msgid "Save"
+msgstr ""
+
+#: ../events/notify.py:115
 msgid "The new message is:"
 msgstr ""
 
@@ -79,12 +84,12 @@ msgid "pbn_label_up_to_general_forum_setup"
 msgstr ""
 
 #. Default: "Local configuration for forums"
-#: ../browser/ploneboard_notification.pt:73
+#: ../browser/ploneboard_notification.pt:74
 msgid "pbn_local_conf_legend"
 msgstr ""
 
 #. Default: "Access local settings for every forum."
-#: ../browser/ploneboard_notification.pt:75
+#: ../browser/ploneboard_notification.pt:76
 msgid "pbn_local_configuration_help"
 msgstr ""
 

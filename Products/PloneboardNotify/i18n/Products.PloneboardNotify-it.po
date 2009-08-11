@@ -2,7 +2,7 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: PloneboardNotify 1.0\n"
-"POT-Creation-Date: 2009-08-10 22:22+0000\n"
+"POT-Creation-Date: 2009-08-11 09:08+0000\n"
 "PO-Revision-Date: 2009-07-09 14:23\n"
 "Last-Translator: Luca Fabbri <luca.fabbri@redturtle.net>\n"
 "Language-Team: RedTurtle Technology <sviluppoplone@redturtle.net>\n"
@@ -16,19 +16,24 @@ msgstr ""
 "Domain: Products.PloneboardNotify\n"
 "X-Is-Fallback-For: it-ch it-it\n"
 
-#: ../events/notify.py:86
+#: ../events/notify.py:107
 msgid "Argument is: "
 msgstr "L'argomento è: "
 
-#: ../events/notify.py:78
+#: ../events/notify.py:99
 msgid "New comment added on the forum: "
 msgstr "Nuovo commento inserito nel forum: "
 
-#: ../events/notify.py:124
+#: ../events/notify.py:145
 msgid "Not able to send notifications"
 msgstr "Non è stato possibile inviare le notifiche"
 
-#: ../events/notify.py:94
+#. Default: "Save"
+#: ../browser/ploneboard_notification.pt:67
+msgid "Save"
+msgstr "Salva"
+
+#: ../events/notify.py:115
 msgid "The new message is:"
 msgstr "Il nuovo messaggio dice:"
 
@@ -78,12 +83,12 @@ msgid "pbn_label_up_to_general_forum_setup"
 msgstr "Torna alla configurazione generale delle notifiche"
 
 #. Default: "Local configuration for forums"
-#: ../browser/ploneboard_notification.pt:73
+#: ../browser/ploneboard_notification.pt:74
 msgid "pbn_local_conf_legend"
 msgstr "Configurazioni locali per forum"
 
 #. Default: "Access local settings for every forum."
-#: ../browser/ploneboard_notification.pt:75
+#: ../browser/ploneboard_notification.pt:76
 msgid "pbn_local_configuration_help"
 msgstr "Accedi alle impostazioni locali per ogni forum."
 
