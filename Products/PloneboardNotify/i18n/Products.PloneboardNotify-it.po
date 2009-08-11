@@ -1,4 +1,5 @@
 # Gettext Message File for PloneboardNotify
+# Luca Fabbri, lucafbb at gmail com
 msgid ""
 msgstr ""
 "Project-Id-Version: PloneboardNotify 1.0\n"
