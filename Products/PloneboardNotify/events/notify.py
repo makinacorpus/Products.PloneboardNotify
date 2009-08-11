@@ -31,6 +31,7 @@ def _getSendToValues(object):
     """
     sendto_all, sendto_values = _getConfiguration(object)
     acl_users = getToolByName(object, 'acl_users')
+    mtool = getToolByName(object, 'portal_membership')
     putils = getToolByName(object, 'plone_utils')
 
     emails = []
@@ -55,7 +56,8 @@ def _getSendToValues(object):
                 emails.extend(_getAllValidEmailsFromGroup(putils, acl_users, group))                
             continue
         # 2 - is a member?
-        user = acl_users.getUserById(entry)
+        #user = acl_users.getUserById(entry) # BBB: seems not working... only on Plone 2.5?
+        user = mtool.getMemberById(entry)
         if user:
             email = user.getProperty('email')
             if putils.validateSingleEmailAddress(email):
@@ -137,9 +139,8 @@ def sendMail(object, event):
             object.plone_log("Notification from message text:\n%s" % text.encode('iso-8859-1'))
             object.plone_log("Notification from message sent to %s (and to %s in bcc)" % (", ".join(send_to) or 'no-one', ", ".join(send_to_bcc) or 'no-one'))
         else:
-            mail_host.secureSend(text.encode('iso-8859-1'), mto=send_to, mfrom=send_from,
-                                 subject=subject,
-                                 encode="utf-8", mbcc=send_to_bcc)
+            mail_host.secureSend(text.encode('utf-8'), mto=send_to, mfrom=send_from,
+                                 subject=subject, encode="utf-8", mbcc=send_to_bcc)
     except Exception, inst:
         putils = getToolByName(object,'plone_utils')
         putils.addPortalMessage(_(u'Not able to send notifications'))

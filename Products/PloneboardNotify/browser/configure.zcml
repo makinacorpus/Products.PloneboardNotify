@@ -4,6 +4,11 @@
    i18n_domain="Products.PloneboardNotify">
 
     <browser:resource
+        name="Locale.gif"
+        file="Locale.gif"
+        />
+
+    <browser:resource
         name="bell_board.gif"
         file="bell_board.gif"
         />

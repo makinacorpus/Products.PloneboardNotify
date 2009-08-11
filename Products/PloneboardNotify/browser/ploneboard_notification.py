@@ -39,6 +39,7 @@ class PloneboardNotificationSystemView(BrowserView):
     @property
     def portal_boards(self):
         """Perform a catalog search for all ploneboard objects in the portal"""
+        # BBB: get rid of object_implements as soon as Plone 2.5 support will be dropped
         catalog = getToolByName(self.context, 'portal_catalog')
         return catalog(object_provides=IPloneboard.__identifier__,
                        object_implements=IPloneboard.__identifier__,)

@@ -4,7 +4,7 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
-"POT-Creation-Date: 2009-08-11 09:08+0000\n"
+"POT-Creation-Date: 2009-08-11 12:31+0000\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI +ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -25,7 +25,7 @@ msgstr ""
 msgid "New comment added on the forum: "
 msgstr ""
 
-#: ../events/notify.py:145
+#: ../events/notify.py:144
 msgid "Not able to send notifications"
 msgstr ""
 
@@ -41,6 +41,16 @@ msgstr ""
 #. Default: "Up to Site Setup"
 #: ../browser/ploneboard_notification.pt:22
 msgid "label_up_to_plone_setup"
+msgstr ""
+
+#. Default: "Local configuration"
+#: ../browser/ploneboard_notification.pt:87
+msgid "local-conf-image-alt"
+msgstr ""
+
+#. Default: "This forum has local configuration"
+#: ../browser/ploneboard_notification.pt:87
+msgid "local-conf-image-title"
 msgstr ""
 
 #. Default: "Forum notification configuration"

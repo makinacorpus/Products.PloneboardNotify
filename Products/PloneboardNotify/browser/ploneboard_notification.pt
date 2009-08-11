@@ -82,14 +82,12 @@
 			       tal:content="area/Title">Area forum 1</a></dt>
 			<dd tal:repeat="forum python:view.getForums(area)">
 				<tal:forum define="localEnabled python:view.isLocalEnabled(forum)">
-					<tal:local-handled condition="localEnabled">
-						<a tal:attributes="href forum/getURL"
-						   tal:content="forum/Title">Forum inside</a>
-					</tal:local-handled>
-					<tal:not-local-handled condition="not:localEnabled">
-						<a tal:attributes="href string:${forum/getURL}/@@ploneboard_notification"
-						   tal:content="forum/Title">Forum inside</a>
-					</tal:not-local-handled>
+					<a tal:attributes="href string:${forum/getURL}/@@ploneboard_notification"
+					   tal:content="forum/Title">Forum inside</a>
+					<img alt="Local configuration" title="This forum has local configuration"
+						 tal:condition="localEnabled" i18n:attributes="alt local-conf-image-alt;
+						                                               title local-conf-image-title;"
+						 tal:attributes="src string:$portal_url/++resource++Locale.gif"/>
 				</tal:forum>
 			</dd>
 		</tal:forumareas>

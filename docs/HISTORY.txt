@@ -8,7 +8,7 @@ Changelog
 * The forum title added in the mail was not the real forum title.
 * Added some other infos to the sent mail.
 * Mail using BCC now supported.
-* Added i18n support and italian translation.
+* Added i18n support and italian complete translation.
 
 0.2.0
 -----
