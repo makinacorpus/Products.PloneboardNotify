@@ -26,7 +26,7 @@ msgstr "Nuovo commento inserito nel forum: "
 
 #: ../events/notify.py:124
 msgid "Not able to send notifications"
-msgstr ""
+msgstr "Non è stato possibile inviare le notifiche"
 
 #: ../events/notify.py:94
 msgid "The new message is:"
@@ -35,90 +35,90 @@ msgstr "Il nuovo messaggio dice:"
 #. Default: "Up to Site Setup"
 #: ../browser/ploneboard_notification.pt:22
 msgid "label_up_to_plone_setup"
-msgstr ""
+msgstr "Torna alla configurazione del portale"
 
 #. Default: "Forum notification configuration"
 #: ../browser/ploneboard_notification_forum.pt:35
 msgid "pbn_forum_conf_legend"
-msgstr ""
+msgstr "Configurazione delle notifiche del forum"
 
 #. Default: "Handle notification system of this forum. Those setting override the global defined ones (if any)."
 #: ../browser/ploneboard_notification_forum.pt:37
 msgid "pbn_forum_configuration_help"
-msgstr ""
+msgstr "Gestisci il sistema di notifiche per questo forum. Queste impostazioni hanno precedenza su quelle globali (se usate)."
 
 #. Default: "Here you can act on events that can send email when a new thread or post is added to this forum."
 #: ../browser/ploneboard_notification_forum.pt:28
 msgid "pbn_forum_panelhelp"
-msgstr ""
+msgstr "Qui puoi agire su eventi che possono inviare email quando una nuova discussione o un intervento viene aggiunto al forum."
 
 #. Default: "If checked, send a mail to every user of the portal at every new thread or responses on the forum."
 #: ../browser/ploneboard_notification_forum.pt:44
 msgid "pbn_forum_sendto_all_help"
-msgstr ""
+msgstr "Se selezionato, invia una mail a tutti i membri del portale per ogni nuova discussione o risposta nel forum."
 
 #. Default: "Recipients"
 #: ../browser/ploneboard_notification_forum.pt:51
 msgid "pbn_forum_sendto_values_label"
-msgstr ""
+msgstr "Destinatari"
 
 #. Default: "General site configuration"
 #: ../browser/ploneboard_notification.pt:36
 msgid "pbn_general_conf_legend"
-msgstr ""
+msgstr "Configurazione generale del sito"
 
 #. Default: "Handle global site configuration, applied to every forum."
 #: ../browser/ploneboard_notification.pt:38
 msgid "pbn_general_configuration_help"
-msgstr ""
+msgstr "Gestisci impostazioni globali del sito, applicate ad ogni forum."
 
 #. Default: "Back to general notify configuration"
 #: ../browser/ploneboard_notification_forum.pt:21
 msgid "pbn_label_up_to_general_forum_setup"
-msgstr ""
+msgstr "Torna alla configurazione generale delle notifiche"
 
 #. Default: "Local configuration for forums"
 #: ../browser/ploneboard_notification.pt:73
 msgid "pbn_local_conf_legend"
-msgstr ""
+msgstr "Configurazioni locali per forum"
 
 #. Default: "Access local settings for every forum."
 #: ../browser/ploneboard_notification.pt:75
 msgid "pbn_local_configuration_help"
-msgstr ""
+msgstr "Accedi alle impostazioni locali per ogni forum."
 
 #. Default: "Here you can act on events that can send email when a new thread or post is added to forums."
 #: ../browser/ploneboard_notification.pt:29
 msgid "pbn_panelhelp"
-msgstr ""
+msgstr "Qui puoi agire su eventi che possono inviare email quando una nuova discussione o un intervento viene aggiunto ai forum."
 
 #. Default: "Ploneboard notifications"
 #: ../browser/ploneboard_notification.pt:17
 msgid "pbn_paneltitle"
-msgstr ""
+msgstr "Notifiche di Ploneboard"
 
 #. Default: "If checked, send a mail to every user of the portal at every new thread or responses on forums."
 #: ../browser/ploneboard_notification.pt:45
 msgid "pbn_sendto_all_help"
-msgstr ""
+msgstr "Se selezionato, invia una mail a tutti i membri del portale per ogni nuova discussione o risposta nei forum."
 
 #. Default: "Send to all?"
 #: ../browser/ploneboard_notification.pt:44
 msgid "pbn_sendto_all_label"
-msgstr ""
+msgstr "Invia a tutti?"
 
 #. Default: "Enter here a complete list of groups, portal members or email addresses to be used as recipient of notifications. One per lines."
 #: ../browser/ploneboard_notification.pt:54
 msgid "pbn_sendto_values_help"
-msgstr ""
+msgstr "Inserisci una lista completa di gruppi, membri del portale o indirizzi email per essere usati come destinatari delle notifiche. Uno per riga."
 
 #. Default: "Tips: you can also append \"|bcc\" to every line to use BCC and hide notification to other recipients."
 #: ../browser/ploneboard_notification.pt:58
 msgid "pbn_sendto_values_help_tips"
-msgstr ""
+msgstr "Avanzate: puoi anche aggiungere in coda di ogni singola riga \"|bcc\" per inviare la mail usando il campo BCC e nascondere l'invio agli altri destinatari."
 
 #. Default: "Recipients"
 #: ../browser/ploneboard_notification.pt:52
 msgid "pbn_sendto_values_label"
-msgstr ""
+msgstr "Destinatari"
 
