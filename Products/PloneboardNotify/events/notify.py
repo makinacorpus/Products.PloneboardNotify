@@ -12,6 +12,7 @@ def _getAllValidEmailsFromGroup(putils, acl_users, group):
 
 def _getConfiguration(object):
     """Return the local or global configuration settings for notify"""
+    # BBB: the best is to refactor this using adapters
     if not ILocalBoardNotify.providedBy(object):
         ploneboard_notify_properties = getToolByName(object,'portal_properties')['ploneboard_notify_properties']
         sendto_all = ploneboard_notify_properties.sendto_all
@@ -83,21 +84,23 @@ def sendMail(object, event):
     """A Zope3 event for sending emails"""
     ploneboard_notify_properties = getToolByName(object,'portal_properties')['ploneboard_notify_properties']
     debug_mode = ploneboard_notify_properties.debug_mode
+    notify_encode = ploneboard_notify_properties.notify_encode
     portal = getToolByName(object,"portal_url").getPortalObject()
     portal_transforms = getToolByName(object, "portal_transforms")
 
     send_from = portal.getProperty('email_from_address')
-    if type(send_from)==tuple and send_from:
+    if send_from and type(send_from)==tuple:
         send_from = send_from[0]
-       
-    send_to, send_to_bcc = _getSendToValues(object)
-    
-    translation_service = getToolByName(object,'translation_service')
-    
+        
     # Conversation or comment?
     conversation = object.getConversation()
     forum = conversation.getForum()
+
+    send_to, send_to_bcc = _getSendToValues(forum)
+    if not send_to and not send_to_bcc:
+        return
     
+    translation_service = getToolByName(object,'translation_service')
     dummy = _(u"New comment added on the forum: ")
     msg_sbj = u"New comment added on the forum: "
     subject = translation_service.utranslate(domain='Products.PloneboardNotify',
@@ -133,16 +136,19 @@ def sendMail(object, event):
     
     mail_host = getToolByName(object, 'MailHost')
 
+    if notify_encode:
+        text = text.encode(notify_encode)
     try:
         if debug_mode:
-            object.plone_log("Notification from message subject: %s" % subject.encode('iso-8859-1'))
-            object.plone_log("Notification from message text:\n%s" % text.encode('iso-8859-1'))
-            object.plone_log("Notification from message sent to %s (and to %s in bcc)" % (", ".join(send_to) or 'no-one', ", ".join(send_to_bcc) or 'no-one'))
+            object.plone_log("Notification from message subject: %s" % subject)
+            object.plone_log("Notification from message text:\n%s" % text)
+            object.plone_log("Notification from message sent to %s (and to %s in bcc)" % (", ".join(send_to) or 'no-one',
+                                                                                          ", ".join(send_to_bcc) or 'no-one'))
         else:
-            mail_host.secureSend(text.encode('utf-8'), mto=send_to, mfrom=send_from,
-                                 subject=subject, encode="utf-8", mbcc=send_to_bcc)
+            mail_host.secureSend(text, mto=send_to, mfrom=send_from,
+                                 subject=subject, charset=notify_encode, mbcc=send_to_bcc)
     except Exception, inst:
         putils = getToolByName(object,'plone_utils')
         putils.addPortalMessage(_(u'Not able to send notifications'))
-        object.plone_log(str(inst))
+        object.plone_log("Error sending notification: %s" % str(inst))
 

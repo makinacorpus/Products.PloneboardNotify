@@ -22,7 +22,7 @@
     <a href=""
        class="link-parent"
        tal:attributes="href string:$portal_url/plone_control_panel"
-       i18n:translate="label_up_to_plone_setup">
+       i18n:domain="plone" i18n:translate="label_up_to_plone_setup">
     Up to Site Setup
     </a>
 
@@ -33,10 +33,11 @@
 
 	<form id="pbn_general_configuration_form" method="post" action="">
 		<fieldset>
-			<legend i18n:translate="pbn_general_conf_legend">General site configuration</legend>
+			<legend i18n:translate="pbn_general_conf_legend">General notify configuration</legend>
 
 		    <p i18n:translate="pbn_general_configuration_help">
 		      Handle global site configuration, applied to every forum.
+			  Those settings are ignored when forums use local configuration.
 		    </p>
 			
 			<input type="checkbox" id="sendto_all" name="sendto_all"
@@ -70,17 +71,27 @@
 		</fieldset>
 	</form>
 
-	<fieldset>
+	<fieldset tal:define="areas view/portal_boards">
 		<legend i18n:translate="pbn_local_conf_legend">Local configuration for forums</legend>
 
-	    <p i18n:translate="pbn_local_configuration_help">
-	      Access local settings for every forum.
-	    </p>
+	    <div class="discreet">
+	      <span i18n:translate="pbn_local_configuration_help1"
+		        tal:omit-tag="">Access local settings for every forum.</span><br/>
+		  <span i18n:translate="pbn_local_configuration_help2"
+		        tal:omit-tag="">
+			  Forums marked with
+				<img i18n:name="mark"
+				     alt="Local configuration" i18n:attributes="alt local-conf-image-alt"
+					 tal:attributes="src string:$portal_url/++resource++Locale.gif"/>
+			  are using local configuration so global configuration above will be ignored.
+		  </span>
+	    </div>
 
-		<tal:forumareas repeat="area view/portal_boards">
+		<tal:forumareas repeat="area areas">
 			<dt><a tal:attributes="href area/getURL"
 			       tal:content="area/Title">Area forum 1</a></dt>
-			<dd tal:repeat="forum python:view.getForums(area)">
+			<tal:forums define="forums python:view.getForums(area)">
+			<dd tal:repeat="forum forums">
 				<tal:forum define="localEnabled python:view.isLocalEnabled(forum)">
 					<a tal:attributes="href string:${forum/getURL}/@@ploneboard_notification"
 					   tal:content="forum/Title">Forum inside</a>
@@ -90,7 +101,14 @@
 						 tal:attributes="src string:$portal_url/++resource++Locale.gif"/>
 				</tal:forum>
 			</dd>
+			<dd tal:condition="not:forums" i18n:translate="">
+				No forums found
+			</dd>
+			</tal:forums>			
 		</tal:forumareas>
+		<p tal:condition="not:areas" i18n:translate="">
+			No forums found
+		</p>
 	</fieldset>
 
 </div>
