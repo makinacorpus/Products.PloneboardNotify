@@ -16,6 +16,11 @@ Yes, this is done to be compatible with Plone 2.5 and older versions of Ploneboa
 To install this for Plone 2.5 just copy the *PloneboardNotify* directory in the *Products* directory
 provided by older Zope releases.
 
+Thanks to
+---------
+
+* **Nicolas Laurance** for giving us some spanish and french translations.
+
 TODO
 ----
 

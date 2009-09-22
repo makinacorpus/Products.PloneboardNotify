@@ -4,7 +4,7 @@ Changelog
 0.4.0
 -----
 
-* ???
+* Added partial french and spanish translations.
 
 0.3.0
 -----
