@@ -25,17 +25,11 @@ setup(name='Products.PloneboardNotify',
       zip_safe=False,
       install_requires=[
           'setuptools',
-          #'Products.Ploneboard',
+          'Products.Ploneboard',
           # -*- Extra requirements: -*-
       ],
       entry_points="""
       # -*- Entry points: -*-
-
-      [distutils.setup_keywords]
-      paster_plugins = setuptools.dist:assert_string_list
-
-      [egg_info.writers]
-      paster_plugins.txt = setuptools.command.egg_info:write_arg
       """,
       paster_plugins = ["ZopeSkel"],
       )

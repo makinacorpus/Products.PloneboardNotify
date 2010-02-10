@@ -9,6 +9,12 @@ You also need `Ploneboard`__ product to be installed.
 
 __ http://pypi.python.org/pypi/Products.Ploneboard
 
+Tested on
+---------
+
+* Plone 3.3 (Ploneboard 2.1)
+* Plone 2.5
+
 Plone 2.5
 ---------
 
