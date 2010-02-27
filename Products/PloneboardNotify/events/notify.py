@@ -15,8 +15,8 @@ except ImportError: # py24
 
 import re
 
-raw_url_finder = r"""<a.*class=\"internal-link\".*href=\"(?P<url1>.*)\".*</a>"""
-"""|<a.*href=\"(?P<url2>.*)\".*class=\"internal-link\".*</a>"""
+raw_url_finder = r"""<a.*?class=\"internal-link\".*?href=\"(?P<url1>.*?)\".*?</a>"""
+"""|<a.*?href=\"(?P<url2>.*?)\".*?class=\"internal-link\".*?</a>"""
 url_finder = re.compile(raw_url_finder)
 
 def _getAllValidEmailsFromGroup(putils, acl_users, group):
