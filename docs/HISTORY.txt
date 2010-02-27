@@ -1,15 +1,16 @@
 Changelog
 =========
 
-0.4.0
------
+0.4.0 (2010-xx-xx)
+------------------
 
-* Added french and spanish translations (thanks to Nicolas Laurance) [keul]
+* Added french translation (thanks to Nicolas Laurance) [keul]
 * Egg format cleaned up [keul]
-* Ploneboard egg is now a dependecy [keul]
+* Ploneboard is now a dependecy [keul]
+* Nicolas Laurance provided changes to send HTML email [keul]
 
-0.3.0
------
+0.3.0 (2009-08-14)
+------------------
 
 * Added local configuration for the Forum content
 * The forum title added in the mail was not the real forum title

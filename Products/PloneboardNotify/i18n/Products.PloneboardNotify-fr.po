@@ -1,7 +1,7 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: PloneBoardNotify 1.0\n"
-"POT-Creation-Date: 2009-03-05 16:03\n"
+"POT-Creation-Date: 2010-02-27 12:16+0000\n"
 "PO-Revision-Date: 2010-02-01 15:28+0000\n"
 "Last-Translator: N Laurance <nlaurance@zindep.com>\n"
 "Language-Team: Zindep <zindep@zindep.com>\n"
@@ -9,17 +9,24 @@ msgstr ""
 "Content-Type: text/plain; charset=utf-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=1; plural=0\n"
+"Language-Code: en\n"
+"Language-Name: English\n"
+"Preferred-Encodings: utf-8 latin1\n"
+"Domain: Products.PloneboardNotify\n"
 "Language-code: fr\n"
 "Language-name: French\n"
 "Preferred-encodings: utf-8\n"
-"Domain: Products.PloneboardNotify\n"
 "X-Is-Fallback-For: fr-be fr-ca fr-lu fr-mc fr-ch fr-fr\n"
 
-#: ../events/notify.py:112
+#: ../events/notify.py:130
 msgid "Argument is: "
 msgstr "Le sujet est: "
 
-#: ../events/notify.py:104
+#: ../events/notify.py:119
+msgid "Message added by: "
+msgstr ""
+
+#: ../events/notify.py:111
 msgid "New comment added on the forum: "
 msgstr "Nouveau commentaire ajouté sur le forum: "
 
@@ -27,7 +34,7 @@ msgstr "Nouveau commentaire ajouté sur le forum: "
 msgid "No forums found"
 msgstr "Aucun forum trouvé"
 
-#: ../events/notify.py:152
+#: ../events/notify.py:188
 msgid "Not able to send notifications"
 msgstr "Impossible d'envoyer les notifications"
 
@@ -36,7 +43,7 @@ msgstr "Impossible d'envoyer les notifications"
 msgid "Save"
 msgstr "Enregistrer"
 
-#: ../events/notify.py:120
+#: ../events/notify.py:138
 msgid "The new message is:"
 msgstr "Le nouveau message est:"
 

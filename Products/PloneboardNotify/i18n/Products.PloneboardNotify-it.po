@@ -3,7 +3,7 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: PloneboardNotify 1.0\n"
-"POT-Creation-Date: 2009-08-14 13:51+0000\n"
+"POT-Creation-Date: 2010-02-27 12:16+0000\n"
 "PO-Revision-Date: 2009-07-09 14:23\n"
 "Last-Translator: Luca Fabbri <luca.fabbri@redturtle.net>\n"
 "Language-Team: RedTurtle Technology <sviluppoplone@redturtle.net>\n"
@@ -17,11 +17,15 @@ msgstr ""
 "Domain: Products.PloneboardNotify\n"
 "X-Is-Fallback-For: it-ch it-it\n"
 
-#: ../events/notify.py:112
+#: ../events/notify.py:130
 msgid "Argument is: "
 msgstr "L'argomento è: "
 
-#: ../events/notify.py:104
+#: ../events/notify.py:119
+msgid "Message added by: "
+msgstr "Messaggio aggiunto da: "
+
+#: ../events/notify.py:111
 msgid "New comment added on the forum: "
 msgstr "Nuovo commento inserito nel forum: "
 
@@ -30,16 +34,17 @@ msgstr "Nuovo commento inserito nel forum: "
 msgid "No forums found"
 msgstr "Nessun forum trovato"
 
-#: ../events/notify.py:152
+#: ../events/notify.py:188
 msgid "Not able to send notifications"
 msgstr "Non è stato possibile inviare le notifiche"
 
 #. Default: "Save"
 #: ../browser/ploneboard_notification.pt:68
+#: ../browser/ploneboard_notification_forum.pt:66
 msgid "Save"
 msgstr "Salva"
 
-#: ../events/notify.py:120
+#: ../events/notify.py:138
 msgid "The new message is:"
 msgstr "Il nuovo messaggio dice:"
 
@@ -115,6 +120,7 @@ msgstr "Qui puoi agire su eventi che possono inviare email quando una nuova disc
 
 #. Default: "Ploneboard notifications"
 #: ../browser/ploneboard_notification.pt:17
+#: ../browser/ploneboard_notification_forum.pt:18
 msgid "pbn_paneltitle"
 msgstr "Notifiche di Ploneboard"
 
@@ -125,16 +131,19 @@ msgstr "Se selezionato, invia una mail a tutti i membri del portale, ad ogni nuo
 
 #. Default: "Send to all?"
 #: ../browser/ploneboard_notification.pt:45
+#: ../browser/ploneboard_notification_forum.pt:43
 msgid "pbn_sendto_all_label"
 msgstr "Invia a tutti?"
 
 #. Default: "Enter here a complete list of groups, portal members or email addresses to be used as recipient of notifications. One per lines."
 #: ../browser/ploneboard_notification.pt:55
+#: ../browser/ploneboard_notification_forum.pt:53
 msgid "pbn_sendto_values_help"
 msgstr "Inserisci una lista completa di gruppi, membri del portale o indirizzi email per essere usati come destinatari delle notifiche. Uno per riga."
 
 #. Default: "Tips: you can also append \"|bcc\" to every line to use BCC and hide notification to other recipients."
 #: ../browser/ploneboard_notification.pt:59
+#: ../browser/ploneboard_notification_forum.pt:57
 msgid "pbn_sendto_values_help_tips"
 msgstr "Avanzate: puoi anche aggiungere in coda di ogni singola riga \"|bcc\" per inviare la mail usando il campo BCC e nascondere l'invio agli altri destinatari."
 

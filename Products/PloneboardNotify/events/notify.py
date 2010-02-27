@@ -6,6 +6,19 @@ from Products.CMFCore.utils import getToolByName
 from zope import interface
 from Products.PloneboardNotify.interfaces import ILocalBoardNotify
 
+try:
+    from email.mime.multipart import MIMEMultipart
+    from email.mime.text import MIMEText
+except ImportError: # py24
+    from email.MIMEMultipart import MIMEMultipart
+    from email.MIMEText import MIMEText
+
+import re
+
+raw_url_finder = r"""<a.*class=\"internal-link\".*href=\"(?P<url1>.*)\".*</a>"""
+"""|<a.*href=\"(?P<url2>.*)\".*class=\"internal-link\".*</a>"""
+url_finder = re.compile(raw_url_finder)
+
 def _getAllValidEmailsFromGroup(putils, acl_users, group):
     """Look at every user in the group, return all valid emails"""
     return [m.getProperty('email') for m in group.getGroupMembers() if putils.validateSingleEmailAddress(m.getProperty('email'))]
@@ -109,20 +122,32 @@ def sendMail(object, event):
                                              context=object)
     subject+= forum.Title().decode('utf-8')
 
+    dummy = _(u"Message added by: ")
+    msg_from = u"Message added by: "
+    from_user = translation_service.utranslate(domain='Products.PloneboardNotify',
+                                          msgid=msg_from,
+                                          default=msg_from,
+                                          context=object)
+
+    member = getToolByName(object,'portal_membership').getAuthenticatedMember()
+    fullname = member.getProperty('fullname') or member.getId()
+    text = from_user + fullname.decode('utf-8')+"\n"
+
     dummy = _(u"Argument is: ")
     msg_txt = u"Argument is: "
-    text = translation_service.utranslate(domain='Products.PloneboardNotify',
+    argument = translation_service.utranslate(domain='Products.PloneboardNotify',
                                           msgid=msg_txt,
                                           default=msg_txt,
                                           context=object)
-    text+=conversation.Title().decode('utf-8')+"\n"
+    text += argument + conversation.Title().decode('utf-8')+"\n"
 
     dummy = _(u"The new message is:")
     msg_txt = u"The new message is:"
-    text += translation_service.utranslate(domain='Products.PloneboardNotify',
+    new_mess = translation_service.utranslate(domain='Products.PloneboardNotify',
                                           msgid=msg_txt,
                                           default=msg_txt,
                                           context=object)
+    text += new_mess
     
     try:
         data_body_to_plaintext = portal_transforms.convert("html_to_web_intelligent_plain_text", object.REQUEST.form['text'])
@@ -131,24 +156,50 @@ def sendMail(object, event):
         data_body_to_plaintext = portal_transforms.convert("html_to_text", object.REQUEST.form['text'])
     body_to_plaintext = data_body_to_plaintext.getData()
     
-    text += "\n" + body_to_plaintext.decode('utf-8')
+    text += "\n\n" + body_to_plaintext.decode('utf-8')
     text += "\n" + object.absolute_url()
     
-    mail_host = getToolByName(object, 'MailHost')
+    htmltext = from_user + fullname.decode('utf-8')+"<br/>" + \
+               argument + conversation.Title().decode('utf-8') + u"<br/>" + new_mess + u"<br/><br/>"
+
+    # Kupu/Tiny can contains relative URLs
+    html_body = object.REQUEST.form['text'].decode('utf-8')
+#    match_objs = url_finder.findall(html_body)
+#    for match_obj in match_objs:
+#        if match_obj:
+#            all_groups = match_obj.groups()
+#    html_body = url_finder.sub("_", html_body)
+    
+    htmltext += html_body
+    htmltext += u'<br/><a href="%s">%s</a>' % (object.absolute_url(), object.absolute_url())
 
     if notify_encode:
         text = text.encode(notify_encode)
+        htmltext = htmltext.encode(notify_encode)
+    
+    msg = MIMEMultipart('alternative')
+    # Record the MIME types of both parts - text/plain and text/html.
+    part1 = MIMEText(text, 'plain', _charset=notify_encode)
+    part2 = MIMEText(htmltext, 'html', _charset=notify_encode)
+
+    # Attach parts into message container.
+    # According to RFC 2046, the last part of a multipart message, in this case
+    # the HTML message, is best and preferred.
+    msg.attach(part1)
+    msg.attach(part2)
+    
+    mail_host = getToolByName(object, 'MailHost')
     try:
         if debug_mode:
             object.plone_log("Notification from message subject: %s" % subject)
+            object.plone_log("Orig. message text:\n%s" % object.REQUEST.form['text'])
             object.plone_log("Notification from message text:\n%s" % text)
             object.plone_log("Notification from message sent to %s (and to %s in bcc)" % (", ".join(send_to) or 'no-one',
                                                                                           ", ".join(send_to_bcc) or 'no-one'))
         else:
-            mail_host.secureSend(text, mto=send_to, mfrom=send_from,
+            mail_host.secureSend(msg, mto=send_to, mfrom=send_from,
                                  subject=subject, charset=notify_encode, mbcc=send_to_bcc)
     except Exception, inst:
         putils = getToolByName(object,'plone_utils')
         putils.addPortalMessage(_(u'Not able to send notifications'))
         object.plone_log("Error sending notification: %s" % str(inst))
-

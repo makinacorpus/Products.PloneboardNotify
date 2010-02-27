@@ -5,7 +5,7 @@ version = '0.4.0'
 
 setup(name='Products.PloneboardNotify',
       version=version,
-      description="A configurable product that rely on Zope 3 events, for sending emails when new message is added on Ploneboard forum",
+      description="A configurable Plone product for sending emails when new message is added on Ploneboard forum",
       long_description=open("README.txt").read() + "\n" +
                        open(os.path.join("docs", "HISTORY.txt")).read(),
       # Get more strings from http://www.python.org/pypi?%3Aaction=list_classifiers

@@ -4,7 +4,7 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
-"POT-Creation-Date: 2009-08-14 13:51+0000\n"
+"POT-Creation-Date: 2010-02-27 12:16+0000\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI +ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -17,29 +17,32 @@ msgstr ""
 "Preferred-Encodings: utf-8 latin1\n"
 "Domain: Products.PloneboardNotify\n"
 
-#: ../events/notify.py:112
+#: ../events/notify.py:130
 msgid "Argument is: "
 msgstr ""
 
-#: ../events/notify.py:104
+#: ../events/notify.py:119
+msgid "Message added by: "
+msgstr ""
+
+#: ../events/notify.py:111
 msgid "New comment added on the forum: "
 msgstr ""
 
-#. Default: "No forums found"
 #: ../browser/ploneboard_notification.pt:104
 msgid "No forums found"
 msgstr ""
 
-#: ../events/notify.py:152
+#: ../events/notify.py:188
 msgid "Not able to send notifications"
 msgstr ""
 
-#. Default: "Save"
 #: ../browser/ploneboard_notification.pt:68
+#: ../browser/ploneboard_notification_forum.pt:66
 msgid "Save"
 msgstr ""
 
-#: ../events/notify.py:120
+#: ../events/notify.py:138
 msgid "The new message is:"
 msgstr ""
 
@@ -115,6 +118,7 @@ msgstr ""
 
 #. Default: "Ploneboard notifications"
 #: ../browser/ploneboard_notification.pt:17
+#: ../browser/ploneboard_notification_forum.pt:18
 msgid "pbn_paneltitle"
 msgstr ""
 
@@ -125,16 +129,19 @@ msgstr ""
 
 #. Default: "Send to all?"
 #: ../browser/ploneboard_notification.pt:45
+#: ../browser/ploneboard_notification_forum.pt:43
 msgid "pbn_sendto_all_label"
 msgstr ""
 
 #. Default: "Enter here a complete list of groups, portal members or email addresses to be used as recipient of notifications. One per lines."
 #: ../browser/ploneboard_notification.pt:55
+#: ../browser/ploneboard_notification_forum.pt:53
 msgid "pbn_sendto_values_help"
 msgstr ""
 
 #. Default: "Tips: you can also append \"|bcc\" to every line to use BCC and hide notification to other recipients."
 #: ../browser/ploneboard_notification.pt:59
+#: ../browser/ploneboard_notification_forum.pt:57
 msgid "pbn_sendto_values_help_tips"
 msgstr ""
 

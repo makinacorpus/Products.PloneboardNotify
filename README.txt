@@ -13,19 +13,19 @@ Tested on
 ---------
 
 * Plone 3.3 (Ploneboard 2.1)
-* Plone 2.5
 
-Plone 2.5
----------
+Plone 2.5 no more?
+------------------
 
-Yes, this is done to be compatible with Plone 2.5 and older versions of Ploneboard.
-To install this for Plone 2.5 just copy the *PloneboardNotify* directory in the *Products* directory
-provided by older Zope releases.
+Maybe that also this release works on Plone 2.5, but I'm not testing on it anymore. If you need it,
+please use older version like `PloneboardNotify 0.3`__
+
+__ http://pypi.python.org/pypi/Products.PloneboardNotify/0.3.0beta
 
 Thanks to
 ---------
 
-* **Nicolas Laurance** for giving us some spanish and french translations.
+* **Nicolas Laurance** for giving french translation and for helping adding other features.
 
 TODO
 ----
