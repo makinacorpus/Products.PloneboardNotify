@@ -7,7 +7,7 @@ Changelog
 * Added french translation (thanks to Nicolas Laurance) [keul]
 * Egg format cleaned up [keul]
 * Ploneboard is now a dependecy [keul]
-* Nicolas Laurance provided changes to send HTML email [keul]
+* Merged Nicolas changes to send HTML email [keul]
 * Fixed internal link in emails sent in the HTML part [keul]
 * Added to messages the user info [keul]
 
@@ -19,12 +19,12 @@ Changelog
 * Added some other infos to the sent mail
 * Mail using BCC now supported
 * Added i18n support and italian complete translation
-* Fixed criticals problem with email encodings
+* Fixed critical problem with email encodings
 * Added a local setting for changing text encoding in email sent
 * A lot of UI enhancement
 
-0.2.0
------
+0.2.0 (2009-06-17)
+------------------
 
 * Added the debug mode to print mail contents but not send anything
 

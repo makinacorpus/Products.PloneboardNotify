@@ -18,7 +18,7 @@ Plone 2.5 no more?
 ------------------
 
 Maybe that also this release works on Plone 2.5, but I'm not testing on it anymore. If you need it,
-please use older version like `PloneboardNotify 0.3`__
+please use an older version like `PloneboardNotify 0.3`__
 
 __ http://pypi.python.org/pypi/Products.PloneboardNotify/0.3.0beta
 
