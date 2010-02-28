@@ -19,6 +19,8 @@ raw_url_finder = r"""<a.*?class=\"internal-link\".*?href=\"(?P<url1>.*?)\".*?</a
 """|<a.*?href=\"(?P<url2>.*?)\".*?class=\"internal-link\".*?</a>"""
 url_finder = re.compile(raw_url_finder)
 
+match_start = "href=\""
+
 def _getAllValidEmailsFromGroup(putils, acl_users, group):
     """Look at every user in the group, return all valid emails"""
     return [m.getProperty('email') for m in group.getGroupMembers() if putils.validateSingleEmailAddress(m.getProperty('email'))]
@@ -164,11 +166,23 @@ def sendMail(object, event):
 
     # Kupu/Tiny can contains relative URLs
     html_body = object.REQUEST.form['text'].decode('utf-8')
-#    match_objs = url_finder.findall(html_body)
-#    for match_obj in match_objs:
-#        if match_obj:
-#            all_groups = match_obj.groups()
-#    html_body = url_finder.sub("_", html_body)
+    # match_objs = url_finder.findall(html_body)
+    # for match_obj in match_objs:
+    #     if match_obj:
+    #         all_groups = match_obj.groups()
+
+    here_url = object.absolute_url()
+    def fixURL(match):
+        """Fix relative URL to absolute ones"""
+        value = match.group()
+        pos_s = value.find(match_start)+len(match_start)
+        pos_e = value.find('"', pos_s+1)
+        url = value[pos_s:pos_e]
+        if not url.startswith(here_url):
+            return value.replace(url, "%s/%s" % (here_url, url))
+        return value
+  
+    html_body = url_finder.sub(fixURL, html_body)
     
     htmltext += html_body
     htmltext += u'<br/><a href="%s">%s</a>' % (object.absolute_url(), object.absolute_url())

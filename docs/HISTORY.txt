@@ -8,6 +8,8 @@ Changelog
 * Egg format cleaned up [keul]
 * Ploneboard is now a dependecy [keul]
 * Nicolas Laurance provided changes to send HTML email [keul]
+* Fixed internal link in emails sent in the HTML part [keul]
+* Added to messages the user info [keul]
 
 0.3.0 (2009-08-14)
 ------------------

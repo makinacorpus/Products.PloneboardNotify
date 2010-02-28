@@ -34,6 +34,5 @@ TODO
   plan wanna reach also forum area configurations.
 * Also manipulate the FROM part of the mail, configurable globally, for single forum, etc.
 * Forum outside the Forum Area are not supported by the configuration UI.
-* Add user info to notification?
 * A complete, clean uninstall procedure that remove all unwanted stuff.
 
