@@ -37,9 +37,28 @@ Inside the *Message Board* we can add multiple forums. We start with one for now
 
 Now we can go to the "*Ploneboard notification system *".
 
+    >>> # browser.getLink('Site Setup').click()
+    >>> # browser.getLink('Ploneboard notification system').click()    
     >>> # I go directly to the form due to an HTTP 500 error running test on Plone 2.5
     >>> browser.open(portal_url+'/@@ploneboard_notification')
     >>> 'Ploneboard notifications' in browser.contents
     True
 
+To begin our test we set a couple of email address in the "Recipients" section. We can use here
+the "*|bcc*" decoration after every value, to add the message to this recipient in *BCC*. 
 
+    >>> browser.getControl('Recipients').value = 'usera@mysite.org\n'
+    ...                                          'userb@mysite.org|bcc'
+
+We used the "*General notify configuration*" section, so a mail will be delivered to both address
+at every new message or discussion in the site.
+
+Now we can go back to our forum and begin a new discussion.
+
+    >>> browser.open(portal_url+'/our-forums/cool-music')
+    >>> browser.getControl('Start a new Conversation').click()
+    >>> browser.getControl('Title').value = 'Discussion 1'
+    >>> browser.getControl('Body text').value = '<p>The <strong>cat</strong> is on the table</p>'
+    >>> browser.getControl('Post comment').click()
+
+  

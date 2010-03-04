@@ -49,7 +49,8 @@ class PloneboardNotificationSystemView(BrowserView):
         catalog = getToolByName(self.context, 'portal_catalog')
         return catalog(object_provides=IForum.__identifier__,
                        object_implements=IForum.__identifier__,
-                       path='/'.join(area_brain.getPhysicalPath()))
+                       path=area_brain.getPath()
+                       )
 
     def isLocalEnabled(self, forum_brain):
         """Check is the Forum use local configuration, so if provides ILocalBoardNotify"""

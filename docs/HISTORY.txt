@@ -11,23 +11,24 @@ Changelog
 * Fixed internal link in emails sent in the HTML part [keul]
 * Added to messages the user info [keul]
 * Added functional tests [keul]
+* Message Boards and forums inside were not correctly shown in settings [keul]
 
 0.3.0 (2009-08-14)
 ------------------
 
-* Added local configuration for the Forum content
-* The forum title added in the mail was not the real forum title
-* Added some other infos to the sent mail
-* Mail using BCC now supported
-* Added i18n support and italian complete translation
-* Fixed critical problem with email encodings
-* Added a local setting for changing text encoding in email sent
-* A lot of UI enhancement
+* Added local configuration for the Forum content [keul]
+* The forum title added in the mail was not the real forum title [keul]
+* Added some other infos to the sent mail [keul]
+* Mail using BCC now supported [keul]
+* Added i18n support and italian complete translation [keul]
+* Fixed critical problem with email encodings [keul]
+* Added a local setting for changing text encoding in email sent [keul]
+* A lot of UI enhancement [keul]
 
 0.2.0 (2009-06-17)
 ------------------
 
-* Added the debug mode to print mail contents but not send anything
+* Added the debug mode to print mail contents but not send anything [keul]
 
 0.1.0 - Unreleased
 ------------------

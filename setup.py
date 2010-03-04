@@ -14,6 +14,7 @@ setup(name='Products.PloneboardNotify',
       classifiers=[
         "Framework :: Plone",
         "Programming Language :: Python",
+        "Development Status :: 4 - Beta",
         "Topic :: Software Development :: Libraries :: Python Modules",
         ],
       keywords='ploneboard forum notify email',
