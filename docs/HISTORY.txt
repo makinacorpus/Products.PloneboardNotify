@@ -10,6 +10,7 @@ Changelog
 * Merged Nicolas changes to send HTML email [keul]
 * Fixed internal link in emails sent in the HTML part [keul]
 * Added to messages the user info [keul]
+* Added functional tests [keul]
 
 0.3.0 (2009-08-14)
 ------------------

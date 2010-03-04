@@ -5,9 +5,9 @@
     xmlns:gs="http://namespaces.zope.org/genericsetup"
     i18n_domain="Products.PloneboardNotify">
 
-  <include package=".browser"
-           zcml:condition="installed Products.Ploneboard"
-  />
+  <include package=".browser" />
+  <include package=".events" />
+  <include package="Products.Ploneboard" />
 
   <gs:registerProfile
       name="default"
@@ -16,9 +16,5 @@
       description="Ploneboard notification system"
       provides="Products.GenericSetup.interfaces.EXTENSION"
       />
-
-  <include package=".events"
-           zcml:condition="installed Products.Ploneboard"
-  />
 
 </configure>

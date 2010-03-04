@@ -24,7 +24,7 @@ msgstr "Le sujet est: "
 
 #: ../events/notify.py:119
 msgid "Message added by: "
-msgstr ""
+msgstr "Message ajouté par: "
 
 #: ../events/notify.py:111
 msgid "New comment added on the forum: "
