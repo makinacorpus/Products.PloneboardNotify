@@ -6,6 +6,8 @@ from Products.CMFCore.utils import getToolByName
 from zope import interface
 from Products.PloneboardNotify.interfaces import ILocalBoardNotify
 
+from Products.PloneboardNotify import html_template
+
 try:
     from email.mime.multipart import MIMEMultipart
     from email.mime.text import MIMEText
@@ -90,7 +92,7 @@ def _getSendToValues(object):
                 emails.append(entry)                
             continue
         # 4 - don't know how to handle this
-        print "Can't use the %s info to send notification" % entry
+        object.plone_log( "Can't use the %s info to send notification" % entry)
     emails = set(emails)
     emails_bcc = set(emails_bcc)
     return [x for x in emails if x not in emails_bcc], list(emails_bcc)
@@ -114,8 +116,10 @@ def sendMail(object, event):
     send_to, send_to_bcc = _getSendToValues(forum)
     if not send_to and not send_to_bcc:
         return
-    
+        
     translation_service = getToolByName(object,'translation_service')
+    # I use the dummy vars below to make i18ndude works
+
     dummy = _(u"New comment added on the forum: ")
     msg_sbj = u"New comment added on the forum: "
     subject = translation_service.utranslate(domain='Products.PloneboardNotify',
@@ -133,7 +137,6 @@ def sendMail(object, event):
 
     member = getToolByName(object,'portal_membership').getAuthenticatedMember()
     fullname = member.getProperty('fullname') or member.getId()
-    text = from_user + fullname.decode('utf-8')+"\n"
 
     dummy = _(u"Argument is: ")
     msg_txt = u"Argument is: "
@@ -141,7 +144,6 @@ def sendMail(object, event):
                                           msgid=msg_txt,
                                           default=msg_txt,
                                           context=object)
-    text += argument + conversation.Title().decode('utf-8')+"\n"
 
     dummy = _(u"The new message is:")
     msg_txt = u"The new message is:"
@@ -149,20 +151,6 @@ def sendMail(object, event):
                                           msgid=msg_txt,
                                           default=msg_txt,
                                           context=object)
-    text += new_mess
-    
-    try:
-        data_body_to_plaintext = portal_transforms.convert("html_to_web_intelligent_plain_text", object.REQUEST.form['text'])
-    except:
-        # Probably Plone 2.5.x
-        data_body_to_plaintext = portal_transforms.convert("html_to_text", object.REQUEST.form['text'])
-    body_to_plaintext = data_body_to_plaintext.getData()
-    
-    text += "\n\n" + body_to_plaintext.decode('utf-8')
-    text += "\n" + object.absolute_url()
-    
-    htmltext = from_user + fullname.decode('utf-8')+"<br/>" + \
-               argument + conversation.Title().decode('utf-8') + u"<br/>" + new_mess + u"<br/><br/>"
 
     # Kupu/Tiny can contains relative URLs
     html_body = object.REQUEST.form['text'].decode('utf-8')
@@ -183,18 +171,29 @@ def sendMail(object, event):
         return value
   
     html_body = url_finder.sub(fixURL, html_body)
-    
-    htmltext += html_body
-    htmltext += u'<br/><a href="%s">%s</a>' % (object.absolute_url(), object.absolute_url())
 
+    text = html_template.message % ({'from': from_user + fullname.decode('utf-8'),
+                                     'argument': argument + conversation.Title().decode('utf-8'),
+                                     'message_intro': new_mess,
+                                     'message': html_body,
+                                     'url': here_url,
+                                     'url_text': here_url,
+                                     })
+    
     if notify_encode:
         text = text.encode(notify_encode)
-        htmltext = htmltext.encode(notify_encode)
+
+    try:
+        data_to_plaintext = portal_transforms.convert("html_to_web_intelligent_plain_text", text)
+    except:
+        # Probably Plone 2.5.x
+        data_to_plaintext = portal_transforms.convert("html_to_text", text)
+    plain_text = data_to_plaintext.getData()
     
     msg = MIMEMultipart('alternative')
     # Record the MIME types of both parts - text/plain and text/html.
-    part1 = MIMEText(text, 'plain', _charset=notify_encode)
-    part2 = MIMEText(htmltext, 'html', _charset=notify_encode)
+    part1 = MIMEText(plain_text, 'plain', _charset=notify_encode)
+    part2 = MIMEText(text, 'html', _charset=notify_encode)
 
     # Attach parts into message container.
     # According to RFC 2046, the last part of a multipart message, in this case
@@ -205,14 +204,18 @@ def sendMail(object, event):
     mail_host = getToolByName(object, 'MailHost')
     try:
         if debug_mode:
-            object.plone_log("Notification from message subject: %s" % subject)
-            object.plone_log("Orig. message text:\n%s" % object.REQUEST.form['text'])
-            object.plone_log("Notification from message text:\n%s" % text)
-            object.plone_log("Notification from message sent to %s (and to %s in bcc)" % (", ".join(send_to) or 'no-one',
-                                                                                          ", ".join(send_to_bcc) or 'no-one'))
+            print "Message subject: %s" % subject
+            print "Message text:\n%s" % text
+            print "Message sent to %s (and to %s in bcc)" % (", ".join(send_to) or 'no-one',
+                                                             ", ".join(send_to_bcc) or 'no-one')
         else:
-            mail_host.secureSend(msg, mto=send_to, mfrom=send_from,
-                                 subject=subject, charset=notify_encode, mbcc=send_to_bcc)
+            try:
+                mail_host.secureSend(msg, mto=send_to, mfrom=send_from,
+                                     subject=subject, charset=notify_encode, mbcc=send_to_bcc)
+            except TypeError:
+                # BBB: Plone 2.5 has problem sending MIMEMultipart... fall back to normal plain text email
+                mail_host.secureSend(plain_text, mto=send_to, mfrom=send_from,
+                                     subject=subject, charset=notify_encode, mbcc=send_to_bcc)                
     except Exception, inst:
         putils = getToolByName(object,'plone_utils')
         putils.addPortalMessage(_(u'Not able to send notifications'))

@@ -10,6 +10,11 @@ We need to setup something before this file can became a real and working browse
     >>> self.portal.error_log._ignored_exceptions = ()
     >>> from Products.PloneTestCase.setup import portal_owner, default_password
 
+To test later e-mail system, we put the notification in *debug mode*, so no real mail will be sent
+but only printed to standard output.
+
+    >>> self.portal.portal_properties.ploneboard_notify_properties.debug_mode = True
+
 Ok, now we are ready to load the Plone site where this product is installed.
 Now we need to login and begin with creation of some forum.
 
