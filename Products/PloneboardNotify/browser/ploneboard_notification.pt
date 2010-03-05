@@ -65,7 +65,7 @@
 			          tal:content="view/load_sendto_values"></textarea>
 
 			<div class="visualPadding">&nbsp;</div>
-			<input type="submit" name="pbn_save" value="Save" class="context"
+			<input type="submit" id="pbn_save" name="pbn_save" value="Save" class="context"
 			       i18n:attributes="value"/>
 
 		</fieldset>

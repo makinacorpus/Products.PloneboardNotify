@@ -15,6 +15,10 @@ but only printed to standard output.
 
     >>> self.portal.portal_properties.ploneboard_notify_properties.debug_mode = True
 
+Later we'll also need the default template for e-mail sent.
+
+    >>> from Products.PloneboardNotify import html_template
+
 Ok, now we are ready to load the Plone site where this product is installed.
 Now we need to login and begin with creation of some forum.
 
@@ -52,11 +56,22 @@ Now we can go to the "*Ploneboard notification system *".
 To begin our test we set a couple of email address in the "Recipients" section. We can use here
 the "*|bcc*" decoration after every value, to add the message to this recipient in *BCC*. 
 
-    >>> browser.getControl('Recipients').value = 'usera@mysite.org\n'
-    ...                                          'userb@mysite.org|bcc'
+*NB*: let me add configuration without using the Plone UI. Use zope.testbrowser to do this will
+not work due to a bug... I think (funny... this works on Plone 2.5 but not on Plone 3.3).
 
-We used the "*General notify configuration*" section, so a mail will be delivered to both address
-at every new message or discussion in the site.
+    >>> browser.getControl('Recipients').value = 'usera@mysite.org\n'
+    ...                                          'userb@mysite.org\n'
+    ...                                          'userc@mysite.org|bcc'
+    >>> browser.getControl('Save').click()
+
+Actually the action above is broken, so we'll perform this manually.
+
+    >>> portal.portal_properties.ploneboard_notify_properties.sendto_values = ['usera@mysite.org',
+    ...                                                                        'userb@mysite.org',
+    ...                                                                        'userc@mysite.org|bcc']
+
+We used the "*General notify configuration*" section, so an e-mail will be delivered to both address
+at every new message or discussion everywhere in the site.
 
 Now we can go back to our forum and begin a new discussion.
 
@@ -64,6 +79,24 @@ Now we can go back to our forum and begin a new discussion.
     >>> browser.getControl('Start a new Conversation').click()
     >>> browser.getControl('Title').value = 'Discussion 1'
     >>> browser.getControl('Body text').value = '<p>The <strong>cat</strong> is on the table</p>'
-    >>> browser.getControl('Post comment').click()
 
-  
+As soon as we confirm the post, an e-mail will be generated.
+
+    >>> browser.getControl('Post comment').click()
+    Message subject: New comment added on the forum: Cool Music
+    Message text:
+    <html>
+    <body>
+    <p>Message added by: The Admin</p>
+    <BLANKLINE>
+    <p>Argument is: Discussion 1</p>
+    <p>The new message is:</p>
+    <p>The <strong>cat</strong> is on the table</p>
+    <BLANKLINE>
+    <hr/>
+    <p><a href="http://nohost/plone/our-forums/cool-music/...">http://nohost/plone/our-forums/cool-music/...</a></p>
+    </body>
+    </html>
+    <BLANKLINE>
+    Message sent to userb@mysite.org, usera@mysite.org (and to userc@mysite.org in bcc)
+
