@@ -83,4 +83,9 @@ class FunctionalTestCase(ptc.FunctionalTestCase):
                                                             'email': 'admin@mysite.org'})
         self.portal.portal_membership.addMember('member', 'secret',
                                                 ('Member',), [],
-                                                properties={'fullname': 'The Member'})
+                                                properties={'fullname': 'The Member',
+                                                            'email': 'user@mysite.org'})
+        self.portal.portal_membership.addMember('another_member', 'secret',
+                                                ('Member',), [],
+                                                properties={'fullname': 'Another Member',
+                                                            'email': 'another@mysite.org'})

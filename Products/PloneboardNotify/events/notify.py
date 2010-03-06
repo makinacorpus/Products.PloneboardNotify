@@ -55,7 +55,7 @@ def _getSendToValues(object):
     emails = []
     emails_bcc = []
     if sendto_all:
-        users = acl_users.getUsers()
+        # users = acl_users.getUsers() # Dor not use for Plone 2.5 compatibility
         emails_bcc.extend([m.getProperty('email') for m in users if putils.validateSingleEmailAddress(m.getProperty('email'))])
     for entry in sendto_values:
         if entry.startswith("#"):
@@ -213,7 +213,7 @@ def sendMail(object, event):
                 mail_host.secureSend(msg, mto=send_to, mfrom=send_from,
                                      subject=subject, charset=notify_encode, mbcc=send_to_bcc)
             except TypeError:
-                # BBB: Plone 2.5 has problem sending MIMEMultipart... fall back to normal plain text email
+                # BBB: Plone 2.5 has problem sending MIMEMultipart... fallback to normal plain text email
                 mail_host.secureSend(plain_text, mto=send_to, mfrom=send_from,
                                      subject=subject, charset=notify_encode, mbcc=send_to_bcc)                
     except Exception, inst:
