@@ -31,7 +31,8 @@
 	  to forums.
     </p>
 
-	<form id="pbn_general_configuration_form" method="post" action="">
+	<form id="pbn_general_configuration_form" method="post"
+	      tal:attributes="action string:$here_url/@@ploneboard_notification">
 		<fieldset>
 			<legend i18n:translate="pbn_general_conf_legend">General notify configuration</legend>
 

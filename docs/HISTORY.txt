@@ -12,6 +12,7 @@ Changelog
 * Added to messages the user info [keul]
 * Added functional tests [keul]
 * Message Boards and forums inside were not correctly shown in settings [keul]
+* Getting e-mail from site users was not working on Plone 2.5 [keul]
 
 0.3.0 (2009-08-14)
 ------------------

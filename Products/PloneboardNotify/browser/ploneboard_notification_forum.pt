@@ -31,7 +31,8 @@
 	  to this forum.
     </p>
 
-	<form id="pbn_forum_configuration_form" method="post" action="">
+	<form id="pbn_forum_configuration_form" method="post"
+		  tal:attributes="action string:$here_url/@@ploneboard_notification">
 		<fieldset>
 			<legend i18n:translate="pbn_forum_conf_legend">Forum notification configuration</legend>
 
@@ -64,7 +65,7 @@
 			          tal:content="view/load_sendto_values"></textarea>
 
 			<div class="visualPadding">&nbsp;</div>
-			<input type="submit" name="pbn_save" value="Save" class="context"
+			<input type="submit" name="pbn_save" id="pbn_save" value="Save" class="context"
 			       i18n:attributes="value"/>
 
 		</fieldset>

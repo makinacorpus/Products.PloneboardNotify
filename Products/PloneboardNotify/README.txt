@@ -1,7 +1,6 @@
 Use of PloneboardNotify
 =======================
 
-Welcome to the guide of the use of PloneboardNotify.
 We need to setup something before this file can became a real and working browser test for Plone.
 
     >>> from Products.Five.testbrowser import Browser
@@ -19,12 +18,8 @@ but only printed to standard output.
 
     >>> self.portal.portal_properties.ploneboard_notify_properties.debug_mode = True
 
-Later we'll also need the default template for e-mail sent.
-
-    >>> from Products.PloneboardNotify import html_template
-
-Ok, now we are ready to load the Plone site where this product is installed.
-Now we need to login and begin with creation of some forum.
+Now we are ready to load the Plone site where the product is installed.
+We need to login before beeing able to start with creation of a forum.
 
     >>> browser.open(portal_url+'/login_form')
     >>> browser.getControl('Login Name').value = 'root'
@@ -33,7 +28,7 @@ Now we need to login and begin with creation of some forum.
     >>> 'You are now logged in' in browser.contents
     True
 
-Ok, now let's create our first forum area.
+Let's create our first forum area.
 
     >>> browser.open(portal_url)
     >>> browser.getLink('Message Board').click()
@@ -57,29 +52,20 @@ Now we can go to the "*Ploneboard notification system *".
     >>> 'Ploneboard notifications' in browser.contents
     True
 
-To begin our test we set a couple of email address in the "Recipients" section. We can use here
-the "*|bcc*" decoration after every value, to add the message to this recipient in *BCC*. 
+To begin our tests we set a couple of e-mail address in the "Recipients" section. We can use here
+the "*|bcc*" decoration after every value, to add the message to this recipients in *BCC*. 
 
-*NB*: let me add configuration without using the Plone UI. Use zope.testbrowser to do this will
-not work due to a bug... I think (funny... this works on Plone 2.5 but not on Plone 3.3).
-
-    >>> browser.getControl('Recipients').value = 'usera@mysite.org\n'
-    ...                                          'userb@mysite.org\n'
-    ...                                          'userc@mysite.org|bcc'
+    >>> browser.getControl('Recipients').value = """usera@mysite.org
+    ... userb@mysite.org
+    ... userc@mysite.org|bcc"""
     >>> browser.getControl('Save').click()
 
-Actually the action above is broken, so we'll perform this manually.
-
-    >>> portal.portal_properties.ploneboard_notify_properties.sendto_values = ['usera@mysite.org',
-    ...                                                                        'userb@mysite.org',
-    ...                                                                        'userc@mysite.org|bcc']
-
-We used the "*General notify configuration*" section, so an e-mail will be delivered to both address
-at every new message or discussion everywhere in the site.
+We used the "*General notify configuration*" section, so an e-mail will be delivered to all address
+at every new message or discussion everywhere in the site. The last address is used for *BCC* section.
 
 
-Use Ploneboard
---------------
+Using Ploneboard
+----------------
 
 Now we can go back to our forum and begin a new discussion.
 
@@ -102,16 +88,16 @@ As soon as we confirm the post, an e-mail will be generated.
     <p>The <strong>cat</strong> is on the table</p>
     <BLANKLINE>
     <hr/>
-    ...
+    <p><a href="http://nohost/plone/our-forums/cool-music/...">http://nohost/plone/our-forums/cool-music/...</a></p>
     </body>
     </html>
     <BLANKLINE>
     Message sent to userb@mysite.org, usera@mysite.org (and to userc@mysite.org in bcc)
 
 A similar message will be delivered also if the user add a response to an existing discussion.
-First we need to go to the discussion itself, after that we cann use the "Reply to this" command.
+First we need to go to the discussion itself, after that we can use the "Reply to this" command.
 
-    >>> browser.getLink('Discussion').click()
+    >>> browser.getLink('Discussion 1').click()
     >>> browser.getControl('Reply to this', index=0).click()
 
 Ploneabord quote text inserted before when replying, so we keep the text and add a new comment.
@@ -134,12 +120,13 @@ Now posting this will generate a new e-mail.
     <p>I don't think so. He is <em>under</em> it</p>
     <BLANKLINE>
     <hr/>
-    ...
+    <p><a href="http://nohost/plone/our-forums/cool-music/...">http://nohost/plone/our-forums/cool-music/...</a></p>
     </body>
     </html>
     <BLANKLINE>
     Message sent to userb@mysite.org, usera@mysite.org (and to userc@mysite.org in bcc)
 
+The e-mail structure is the same (the quoted text is optional as the commenter can remove it).
 
 Play with users of the portal
 -----------------------------
@@ -150,13 +137,10 @@ can be combined, also with the *BCC* feature.
 Let's we change something in the configuration.
 
     >>> browser.open(portal_url+'/@@ploneboard_notification')
-    >>> browser.getControl('Recipients').value = 'usera@mysite.org\n'
-    ...                                          'root|bcc\n'
-    ...                                          'member'
+    >>> browser.getControl('Recipients').value = """usera@mysite.org
+    ... root|bcc
+    ... member"""
     >>> browser.getControl('Save').click()
-    >>> portal.portal_properties.ploneboard_notify_properties.sendto_values = ['usera@mysite.org',
-    ...                                                                        'root|bcc',
-    ...                                                                        'member']
 
 We added the *root* user in *BCC* and also another simple member (called *member*). To test this we can
 go back to our forum and add another conversation.
@@ -180,7 +164,7 @@ Let's see what result will be generated.
     <p>I will not fear</p>
     <BLANKLINE>
     <hr/>
-    ...
+    <p><a href="http://nohost/plone/our-forums/cool-music/...">http://nohost/plone/our-forums/cool-music/...</a></p>
     </body>
     </html>
     <BLANKLINE>
@@ -195,7 +179,6 @@ For privacy reason, when using this feature all e-mail will be delivered using *
     >>> browser.open(portal_url+'/@@ploneboard_notification')
     >>> browser.getControl('Send to all?').click()
     >>> browser.getControl('Save').click()
-    >>> portal.portal_properties.ploneboard_notify_properties.sendto_all = True
 
 To test what is changed right now we will add a response to the discussion above.
 
@@ -215,7 +198,7 @@ To test what is changed right now we will add a response to the discussion above
     Fear is the mind-killer
     <BLANKLINE>
     <hr/>
-    ...
+    <p><a href="http://nohost/plone/our-forums/cool-music/...">http://nohost/plone/our-forums/cool-music/...</a></p>
     </body>
     </html>
     <BLANKLINE>
@@ -231,17 +214,18 @@ If our Plone site keep a lot of message boards and/or a lot of forums (even if i
 the global notification preference can be difficult to be managed.
 
 Maybe we need to notify all users of the portal for a single (public) forum, but notify only some special
-members for one or more private forums, and different forum may need different notification address...
+members for one or more private forums, and different forum may need different notification address
+group...
 
-All those need can be reached configuring the notification also for a forum instead of using the global
+All those needs can be reached configuring the notification also for a forum instead of using the global
 notification setting we used.
-In facts the global notification configuration can be ignored and neved used.
+In facts the global notification settings can be ignored and never used.
 
 We can manage the per-forum configuration going back to the "Ploneboard notification" panel.
 
     >>> browser.open(portal_url+'/@@ploneboard_notification')
 
-There we will see all message boards and all forums inside them. Forum that have already a local settings
+There, we will see all message boards and all forums inside them. Forum that have already a local settings
 are marked with a special image.
 
 Let's change the notification settings adding a local preference for our "*Cool Music*" forum.
@@ -250,4 +234,46 @@ Let's change the notification settings adding a local preference for our "*Cool 
     >>> 'Ploneboard notifications - Cool Music' in browser.contents
     True
 
+The options there are the same used in global configuration. We can here change (and this time, only for
+the "*Cool Music*" forum the notification settings.
 
+Let's make this forum send notification only to a webmaster address.
+
+    >>> browser.getControl('Recipients').value = 'webmaster@mysite.org'
+    >>> browser.getControl('Save').click()
+    >>> browser.url == portal_url+"/our-forums/cool-music/@@ploneboard_notification"
+    True
+    >>> browser.getControl('Recipients').value
+    'webmaster@mysite.org'
+
+Now we simply need to see what is changed, starting a new discussion inside our forum.
+
+    >>> browser.open(portal_url+'/our-forums/cool-music')
+    >>> browser.getControl('Start a new Conversation').click()
+    >>> browser.getControl('Title').value = "Talking to webmaster"
+    >>> browser.getControl('Body text').value = "<p>This will be sent only to Webmaster!</p>"
+    >>> browser.getControl('Post comment').click()
+    Message subject: New comment added on the forum: Cool Music
+    Message text:
+    <html>
+    <body>
+    <p>Message added by: The Admin</p>
+    <BLANKLINE>
+    <p>Argument is: Talking to webmaster</p>
+    <p>The new message is:</p>
+    <p>This will be sent only to Webmaster!</p>
+    <BLANKLINE>
+    <hr/>
+    <p><a href="http://nohost/plone/our-forums/cool-music/...">http://nohost/plone/our-forums/cool-music/...</a></p>
+    </body>
+    </html>
+    <BLANKLINE>
+    Message sent to webmaster@mysite.org (and to no-one in bcc)
+
+We can see that no global setting has been taken there. This forum now lives on his own.
+
+
+Handle Kupu/TinyMCE internal links
+----------------------------------
+
+todo
