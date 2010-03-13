@@ -43,7 +43,7 @@ Inside the *Message Board* we can add multiple forums. We start with one for now
     >>> portal_url+'/our-forums/cool-music' in browser.url
     True
 
-Now we can go to the "*Ploneboard notification system *".
+Now we can go to the "*Ploneboard notification system*".
 
     >>> # browser.getLink('Site Setup').click()
     >>> # browser.getLink('Ploneboard notification system').click()    
@@ -128,8 +128,8 @@ Now posting this will generate a new e-mail.
 
 The e-mail structure is the same (the quoted text is optional as the commenter can remove it).
 
-Play with users of the portal
------------------------------
+Play with users (or groups) of the portal
+-----------------------------------------
 
 PloneboardNotify can also use e-mail address taken from the portal users. Use of e-mail address or user ids
 can be combined, also with the *BCC* feature.
@@ -169,6 +169,9 @@ Let's see what result will be generated.
     </html>
     <BLANKLINE>
     Message sent to user@mysite.org, usera@mysite.org (and to admin@mysite.org in bcc)
+
+If you use groups in your Plone site you can also use group ids there, and the notification will be sent
+to all users inside that group (and you can also user "*|bcc*" after the group name).
 
 Another option available in the configuration panel is a control to send notification to *all* users of
 the site. This can be very helpful if the site is mainly a forum resource (but can also became a nasty
@@ -276,4 +279,39 @@ We can see that no global setting has been taken there. This forum now lives on 
 Handle Kupu/TinyMCE internal links
 ----------------------------------
 
-todo
+When adding comments the forum users could take benefit from using a WYSIWYG editor like *Kupu* or
+*TinyMCE*. When using Ploneboard the toolbar available is reduced, but the feature of making internal
+link is there.
+
+The problem: when sending the e-mail to the recipients the URL of links generated will be broken because
+we will find *relative links*, working perfectly when you visit the discussion from the Plone site itself.
+
+PloneboardNotify will manage this, changing the internal links inside the message. This will be done only
+for HTML *<a>* elements using the CSS class "*internal-link*".
+
+Let's test this adding a new discussion.
+
+    >>> browser.open(portal_url+'/our-forums/cool-music')
+    >>> browser.getControl('Start a new Conversation').click()
+    >>> browser.getControl('Title').value = "Please visit this link!"
+    >>> browser.getControl('Body text').value = """Please, visit <a title="News" class="internal-link" href="../our-forums/cool-music/news">this</a>."""
+    >>> browser.getControl('Post comment').click()
+    Message subject: New comment added on the forum: Cool Music
+    Message text:
+    <html>
+    <body>
+    <p>Message added by: The Admin</p>
+    <BLANKLINE>
+    <p>Argument is: Please visit this link!</p>
+    <p>The new message is:</p>
+    Please, visit <a title="News" class="internal-link" href="http://nohost/plone/our-forums/cool-music/.../../our-forums/cool-music/news">this</a>.
+    <BLANKLINE>
+    <hr/>
+    <p><a href="http://nohost/plone/our-forums/cool-music/...">http://nohost/plone/our-forums/cool-music/...</a></p>
+    </body>
+    </html>
+    <BLANKLINE>
+    Message sent to webmaster@mysite.org (and to no-one in bcc)
+
+As we can see, the relative link is keepd but the absolute portal url is added before it.
+

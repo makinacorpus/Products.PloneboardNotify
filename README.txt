@@ -22,7 +22,7 @@ Yes, this is done to be compatible with Plone 2.5 and older versions of Ploneboa
 To install this for Plone 2.5 just copy the *PloneboardNotify* directory in the *Products* directory
 provided by older Zope releases.
 
-**Please note** that you need *`Five`__ 1.4* to run tests on Plone 2.5.
+**Please note** that you need `Five`__ 1.4 to run tests on Plone 2.5.
 
 __ http://codespeak.net/z3/five/release/
 
