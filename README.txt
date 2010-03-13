@@ -41,3 +41,4 @@ TODO and know issues
 * A complete, clean uninstall procedure that remove all unwanted stuff
 * Give a simple way to manipulate the notification message format
 * Not able to send HTML e-mail with Plone 2.5... to be fixed
+
