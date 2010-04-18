@@ -99,7 +99,12 @@ def _getSendToValues(object):
     return [x for x in emails if x not in emails_bcc], list(emails_bcc)
 
 def sendMail(object, event):
-    """A Zope3 event for sending emails"""
+    """A Zope 3 event for sending e-mail to forum's users"""
+    # Check if the product is installed in this instance
+    portal_quickinstaller = getToolByName(object, 'portal_quickinstaller')
+    if not portal_quickinstaller.isProductInstalled('PloneboardNotify'):
+        return
+    
     ploneboard_notify_properties = getToolByName(object,'portal_properties')['ploneboard_notify_properties']
     debug_mode = ploneboard_notify_properties.debug_mode
     notify_encode = ploneboard_notify_properties.notify_encode

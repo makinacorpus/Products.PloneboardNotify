@@ -1,7 +1,7 @@
 from setuptools import setup, find_packages
 import os
 
-version = '0.4.0'
+version = '0.4.1'
 
 tests_require=['zope.testing']
 
@@ -21,7 +21,7 @@ setup(name='Products.PloneboardNotify',
       keywords='ploneboard forum notify email',
       author='keul',
       author_email='luca.fabbri@redturtle.net',
-      url='http://svn.plone.org/svn/collective/Products.PloneboardNotify',
+      url='http://plone.org/products/ploneboardnotify',
       license='GPL',
       packages=find_packages(exclude=['ez_setup']),
       namespace_packages=['Products'],

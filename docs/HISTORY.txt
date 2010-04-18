@@ -1,6 +1,11 @@
 Changelog
 =========
 
+0.4.1 (unreleased)
+------------------
+
+* Do not use notification system if PloneboardNotify is not installed (close #2) [keul]
+
 0.4.0 (2010-03-13)
 ------------------
 
