@@ -1,9 +1,5 @@
 # -*- coding: utf-8 -*-
 
-__author__ = """RedTurtle Technology"""
-__docformat__ = 'plaintext'
-
-import string
 from Products.CMFCore.utils import getToolByName
 from Products.CMFPlone.utils import getFSVersionTuple
 from StringIO import StringIO

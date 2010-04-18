@@ -6,6 +6,7 @@ Changelog
 
 * Don't try to send notification if PloneboardNotify isn't installed in the Plone site (close #2) [keul]
 * Forum outside the Forum Area were not supported by the configuration UI [keul]
+* Message boards and forums are now sorted [keul]
 
 0.4.0 (2010-03-13)
 ------------------

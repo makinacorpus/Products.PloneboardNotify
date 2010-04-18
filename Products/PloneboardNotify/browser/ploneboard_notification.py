@@ -42,7 +42,26 @@ class PloneboardNotificationSystemView(BrowserView):
         # BBB: get rid of object_implements as soon as Plone 2.5 support will be dropped
         catalog = getToolByName(self.context, 'portal_catalog')
         return catalog(object_provides=IPloneboard.__identifier__,
-                       object_implements=IPloneboard.__identifier__,)
+                       object_implements=IPloneboard.__identifier__,
+                       sort_on='sortable_title')
+
+    @property
+    def orphan_forums(self):
+        """Get all forums that are not contained inside message board content types"""
+        catalog = getToolByName(self.context, 'portal_catalog')
+        forums = catalog(object_provides=IForum.__identifier__,
+                         object_implements=IForum.__identifier__,
+                         sort_on='sortable_title')
+        orphans = []
+        for forum in forums:
+            path = forum.getPath()
+            board = catalog(path={'query': path[:path.rfind('/')],
+                                  'depth': 0},
+                            object_provides=IPloneboard.__identifier__,
+                            object_implements=IPloneboard.__identifier__,)
+            if not board:
+                orphans.append(forum)
+        return orphans
 
     def getForums(self, area_brain):
         """Return all forums inside the area forum passed"""

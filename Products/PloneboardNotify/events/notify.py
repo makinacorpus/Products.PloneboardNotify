@@ -3,9 +3,7 @@
 from Products.CMFPlone import PloneMessageFactory as _
 from Products.CMFCore.utils import getToolByName
 
-from zope import interface
 from Products.PloneboardNotify.interfaces import ILocalBoardNotify
-
 from Products.PloneboardNotify import html_template
 
 try:

@@ -72,7 +72,8 @@
 		</fieldset>
 	</form>
 
-	<fieldset tal:define="areas view/portal_boards">
+	<fieldset tal:define="areas view/portal_boards;
+	                      orphans view/orphan_forums;">
 		<legend i18n:translate="pbn_local_conf_legend">Local configuration for forums</legend>
 
 	    <div class="discreet">
@@ -92,7 +93,24 @@
 			<dt><a tal:attributes="href area/getURL"
 			       tal:content="area/Title">Area forum 1</a></dt>
 			<tal:forums define="forums python:view.getForums(area)">
-			<dd tal:repeat="forum forums">
+				<dd tal:repeat="forum forums">
+					<tal:forum define="localEnabled python:view.isLocalEnabled(forum)">
+						<a tal:attributes="href string:${forum/getURL}/@@ploneboard_notification"
+						   tal:content="forum/Title">Forum inside</a>
+						<img alt="Local configuration" title="This forum has local configuration"
+							 tal:condition="localEnabled" i18n:attributes="alt local-conf-image-alt;
+							                                               title local-conf-image-title;"
+							 tal:attributes="src string:$portal_url/++resource++Locale.gif"/>
+					</tal:forum>
+				</dd>
+				<dd tal:condition="not:forums" i18n:translate="">
+					No forums found
+				</dd>
+			</tal:forums>			
+		</tal:forumareas>
+		<tal:orphans condition="orphans">
+			<dt i18n:translate="">Orphan forums</dt>
+			<dd tal:repeat="forum orphans">
 				<tal:forum define="localEnabled python:view.isLocalEnabled(forum)">
 					<a tal:attributes="href string:${forum/getURL}/@@ploneboard_notification"
 					   tal:content="forum/Title">Forum inside</a>
@@ -102,12 +120,8 @@
 						 tal:attributes="src string:$portal_url/++resource++Locale.gif"/>
 				</tal:forum>
 			</dd>
-			<dd tal:condition="not:forums" i18n:translate="">
-				No forums found
-			</dd>
-			</tal:forums>			
-		</tal:forumareas>
-		<p tal:condition="not:areas" i18n:translate="">
+		</tal:orphans>
+		<p tal:condition="python: not areas and not orphans" i18n:translate="">
 			No forums found
 		</p>
 	</fieldset>

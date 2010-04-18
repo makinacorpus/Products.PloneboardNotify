@@ -5,9 +5,6 @@ import zope.interface
 from Products.Five.browser import BrowserView
 # from Products.Five.browser.pagetemplatefile import ViewPageTemplateFile
 from Products.Five.browser.pagetemplatefile import ZopeTwoPageTemplateFile # Plone 2.5 compatibility
-from Products.CMFCore.utils import getToolByName
-
-from Products.Ploneboard.interfaces import IPloneboard, IForum
 from Products.PloneboardNotify.interfaces import ILocalBoardNotify
 
 class PloneboardNotificationSystemView(BrowserView):
