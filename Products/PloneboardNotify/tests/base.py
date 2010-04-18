@@ -89,3 +89,9 @@ class FunctionalTestCase(ptc.FunctionalTestCase):
                                                 ('Member',), [],
                                                 properties={'fullname': 'Another Member',
                                                             'email': 'another@mysite.org'})
+
+    def enableForumGlobally(self):
+        portal_types = self.portal.portal_types
+        forum_type = portal_types.getTypeInfo('PloneboardForum')
+        forum_type.global_allow = True
+

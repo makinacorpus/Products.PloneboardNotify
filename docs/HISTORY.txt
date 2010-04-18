@@ -4,14 +4,15 @@ Changelog
 0.4.1 (unreleased)
 ------------------
 
-* Do not use notification system if PloneboardNotify is not installed (close #2) [keul]
+* Don't try to send notification if PloneboardNotify isn't installed in the Plone site (close #2) [keul]
+* Forum outside the Forum Area were not supported by the configuration UI [keul]
 
 0.4.0 (2010-03-13)
 ------------------
 
 * Added french translation (thanks to Nicolas Laurance) [keul]
 * Egg format cleaned up [keul]
-* Ploneboard is now a dependecy [keul]
+* Ploneboard is now a dependency [keul]
 * Merged Nicolas changes to send HTML email [keul]
 * Fixed internal link in emails sent in the HTML part [keul]
 * Added to messages the user info [keul]

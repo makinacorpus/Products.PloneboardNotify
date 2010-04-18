@@ -315,3 +315,33 @@ Let's test this adding a new discussion.
 
 As we can see, the relative link is keepd but the absolute portal url is added before it.
 
+
+Forums not inside message board
+-------------------------------
+
+Another not very know Ploneboard feature is that is possible to enable the forum usage also outside
+message boards, making it addable globally where we want.
+
+Commonly this feature must be enabled through ZMI access, using the *portal_types* tools.
+
+    >>> browser.open(portal_url)
+    >>> browser.getLink("Forum")
+    Traceback (most recent call last):
+    ...
+    LinkNotFoundError
+    >>> self.enableForumGlobally()
+    >>> browser.open(portal_url)
+    >>> browser.getLink("Forum").click()
+    >>> browser.getControl('Title').value = 'Lonely messages'
+    >>> browser.getControl('Save').click()
+    >>> portal_url+'/lonely-messages' in browser.url
+    True
+
+Now that we have a forum inside the portal root, let's go to see how this is handled by the configuration
+area.
+
+    >>> browser.open(portal_url+'/@@ploneboard_notification')
+    >>> browser.getLink("Lonely messages").click()
+    >>> 'Ploneboard notifications - Lonely messages' in browser.contents
+    True
+    

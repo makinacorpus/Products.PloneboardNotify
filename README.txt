@@ -37,7 +37,6 @@ TODO and know issues
 * Current version support global configuration and forum specific ones; the long-term
   plan wanna reach also forum area configurations
 * Also manipulate the FROM part of the mail, configurable globally, for single forum, etc
-* Forum outside the Forum Area are not supported by the configuration UI
 * A complete, clean uninstall procedure that remove all unwanted stuff
 * Give a simple way to manipulate the notification message format
 * Not able to send HTML e-mail with Plone 2.5... to be fixed
