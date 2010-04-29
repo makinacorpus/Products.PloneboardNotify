@@ -1,6 +1,11 @@
 Changelog
 =========
 
+0.5.0 (Unreleased)
+------------------
+
+* Added russian translation (thanks to Alison Taylder) [keul]
+
 0.4.1 (2010-04-19)
 ------------------
 
