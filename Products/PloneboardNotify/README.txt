@@ -153,7 +153,7 @@ We add a new comment.
 Now posting this will generate a new e-mail.
 
     >>> browser.getControl('Post comment').click()
-    Message subject: CUSTOM1:New comment added on the forum: Cool Music
+    Message subject: CUSTOM:New comment added on the forum: Cool Music
     Message text:
     <html>
     <body>
