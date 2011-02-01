@@ -125,7 +125,9 @@ def sendMail(object, event):
     # I use the dummy vars below to make i18ndude works
 
     dummy = _(u"New comment added on the forum: ")
-    msg_sbj = u"New comment added on the forum: "
+    msg_sbj = ploneboard_notify_properties.msg_subject
+    if not msg_sbj:
+        msg_sbj = u"New comment added on the forum: "
     subject = translation_service.utranslate(domain='Products.PloneboardNotify',
                                              msgid=msg_sbj,
                                              default=msg_sbj,
@@ -133,7 +135,9 @@ def sendMail(object, event):
     subject+= forum.Title().decode('utf-8')
 
     dummy = _(u"Message added by: ")
-    msg_from = u"Message added by: "
+    msg_from = ploneboard_notify_properties.msg_from
+    if not msg_from:
+        msg_from = u"Message added by: "
     from_user = translation_service.utranslate(domain='Products.PloneboardNotify',
                                           msgid=msg_from,
                                           default=msg_from,
@@ -143,14 +147,18 @@ def sendMail(object, event):
     fullname = member.getProperty('fullname') or member.getId()
 
     dummy = _(u"Argument is: ")
-    msg_txt = u"Argument is: "
+    msg_txt = ploneboard_notify_properties.msg_argument
+    if not msg_txt:
+        msg_txt = u"Argument is: "
     argument = translation_service.utranslate(domain='Products.PloneboardNotify',
                                           msgid=msg_txt,
                                           default=msg_txt,
                                           context=object)
 
     dummy = _(u"The new message is:")
-    msg_txt = u"The new message is:"
+    msg_txt = ploneboard_notify_properties.msg_mess
+    if not msg_txt:
+        msg_txt = u"The new message is:"
     new_mess = translation_service.utranslate(domain='Products.PloneboardNotify',
                                           msgid=msg_txt,
                                           default=msg_txt,

@@ -128,6 +128,52 @@ Now posting this will generate a new e-mail.
 
 The e-mail structure is the same (the quoted text is optional as the commenter can remove it).
 
+
+Use properties to customize strings in notification messages 
+------------------------------------------------------------
+You can put your own message strings in portal_properties/ploneboard_notify_properties to customize the strings. 
+If one of this fields is not empty it will be used to override the default string.
+
+We put some custom strings in the properties.
+
+    >>> self.portal.portal_properties.ploneboard_notify_properties.msg_subject = 'CUSTOM:New comment added on the forum: '
+    >>> self.portal.portal_properties.ploneboard_notify_properties.msg_from = 'CUSTOM:Message added by: '
+    >>> self.portal.portal_properties.ploneboard_notify_properties.msg_argument = 'CUSTOM:Argument is: '
+    >>> self.portal.portal_properties.ploneboard_notify_properties.msg_mess = 'CUSTOM:The new message is:'
+
+Now we can use the "Reply to this" command to test these change.
+     
+    >>> browser.getControl('Reply to this', index=0).click()    
+    
+We add a new comment.
+    
+    >>> browser.getControl('Body text').value = browser.getControl('Body text').value + \
+    ...                                         "\n<p>We have custom strings in notifications.</p>"
+
+Now posting this will generate a new e-mail.
+
+    >>> browser.getControl('Post comment').click()
+    Message subject: CUSTOM1:New comment added on the forum: Cool Music
+    Message text:
+    <html>
+    <body>
+    <p>CUSTOM:Message added by: The Admin</p>
+    <BLANKLINE>
+    <p>CUSTOM:Argument is: Discussion 1</p>
+    <p>CUSTOM:The new message is:</p>
+    ...
+    <p>We have custom strings in notifications.</p>
+    <BLANKLINE>
+    <hr/>
+    <p><a href="http://nohost/plone/our-forums/cool-music/...">http://nohost/plone/our-forums/cool-music/...</a></p>
+    </body>
+    </html>
+    <BLANKLINE>
+    Message sent to userb@mysite.org, usera@mysite.org (and to userc@mysite.org in bcc)
+
+Here we have the same structure as befor but different message strings.
+
+
 Play with users (or groups) of the portal
 -----------------------------------------
 
