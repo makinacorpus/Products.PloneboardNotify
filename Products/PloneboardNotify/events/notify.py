@@ -143,9 +143,15 @@ def sendMail(object, event):
                                           default=msg_from,
                                           context=object)
 
-    member = getToolByName(object,'portal_membership').getAuthenticatedMember()
-    fullname = member.getProperty('fullname') or member.getId()
-
+    pm = getToolByName(object,'portal_membership')
+    if pm.isAnonymousUser():
+        fullname = translation_service.utranslate(domain='Products.PloneboardNotify',
+                                          msgid="Anonymous",
+                                          default="Anonymous",
+                                          context=object)
+    else:
+        member = pm.getAuthenticatedMember()
+        fullname = member.getProperty('fullname') or member.getId()
     dummy = _(u"Argument is: ")
     msg_txt = ploneboard_notify_properties.msg_argument
     if not msg_txt:
