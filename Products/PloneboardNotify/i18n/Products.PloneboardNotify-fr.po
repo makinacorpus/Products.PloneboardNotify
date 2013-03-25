@@ -1,7 +1,7 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: PloneBoardNotify 1.0\n"
-"POT-Creation-Date: 2010-04-18 22:17+0000\n"
+"POT-Creation-Date: 2012-12-07 17:11+0000\n"
 "PO-Revision-Date: 2010-02-01 15:28+0000\n"
 "Last-Translator: N Laurance <nlaurance@zindep.com>\n"
 "Language-Team: Zindep <zindep@zindep.com>\n"
@@ -18,15 +18,19 @@ msgstr ""
 "Preferred-encodings: utf-8\n"
 "X-Is-Fallback-For: fr-be fr-ca fr-lu fr-mc fr-ch fr-fr\n"
 
-#: ../events/notify.py:147
+#: ../events/notify.py:149
+msgid "Anonymous"
+msgstr ""
+
+#: ../events/notify.py:153
 msgid "Argument is: "
 msgstr "Le sujet est: "
 
-#: ../events/notify.py:137
+#: ../events/notify.py:138
 msgid "Message added by: "
 msgstr "Message ajouté par: "
 
-#: ../events/notify.py:129
+#: ../events/notify.py:128
 msgid "New comment added on the forum: "
 msgstr "Nouveau commentaire ajouté sur le forum: "
 
@@ -34,7 +38,7 @@ msgstr "Nouveau commentaire ajouté sur le forum: "
 msgid "No forums found"
 msgstr "Aucun forum trouvé"
 
-#: ../events/notify.py:227
+#: ../events/notify.py:237
 msgid "Not able to send notifications"
 msgstr "Impossible d'envoyer les notifications"
 
@@ -47,7 +51,7 @@ msgstr ""
 msgid "Save"
 msgstr "Enregistrer"
 
-#: ../events/notify.py:154
+#: ../events/notify.py:162
 msgid "The new message is:"
 msgstr "Le nouveau message est:"
 

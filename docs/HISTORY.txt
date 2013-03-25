@@ -5,6 +5,7 @@ Changelog
 ------------------
 
 * Added russian translation (thanks to Alison Taylder) [keul]
+* Fixed notify event when an anonymous leave a comment. Now the author is set to "Anonymous" [cekk]
 
 0.4.1 (2010-04-19)
 ------------------
