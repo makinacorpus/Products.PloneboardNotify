@@ -3,7 +3,8 @@
     xmlns:plone="http://namespaces.plone.org/plone"
     xmlns:zcml="http://namespaces.zope.org/zcml"
     i18n_domain="Products.PloneboardNotify">
-  <include file="plone3.zcml" zcml:condition="not-have plone-4"/>
-  <include file="plone4.zcml" zcml:condition="have plone-4"/>
-
+  <subscriber for="Products.Ploneboard.interfaces.IComment
+      zope.lifecycleevent.interfaces.IObjectAddedEvent"
+      handler=".notify.sendMail"
+      zcml:condition="installed Products.PloneboardNotify"/>
 </configure>
