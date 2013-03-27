@@ -41,18 +41,9 @@ def setup_product():
     zcml.load_config('configure.zcml', Products.PloneboardNotify)
     fiveconfigure.debug_mode = False
 
-    # We need to tell the testing framework that these products
-    # should be available. This can't happen until after we have loaded
-    # the ZCML. Thus, we do it here. Note the use of installPackage()
-    # instead of installProduct().
-    # This is *only* necessary for packages outside the Products.*
-    # namespace which are also declared as Zope 2 products, using
-    # <five:registerPackage /> in ZCML.
 
-    # We may also need to load dependencies, e.g.:
-    #   ztc.installPackage('borg.localrole')
-    ztc.installProduct('Ploneboard')
-    ztc.installProduct('PloneboardNotify')
+ztc.installProduct('Ploneboard')
+ztc.installProduct('PloneboardNotify')
 
 # The order here is important: We first call the (deferred) function
 # which installs the products we need for this product. Then, we let
@@ -61,8 +52,7 @@ def setup_product():
 setup_product()
 # Below I don't use Products.xxx for Plone 2.5 compatibility
 ptc.setupPloneSite(products=['Products.CMFPlacefulWorkflow',
-                             'Ploneboard',
-                             'PloneboardNotify'])
+                             'Products.PloneboardNotify'])
 
 class TestCase(ptc.PloneTestCase):
     """We use this base class for all the tests in this package. If

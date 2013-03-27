@@ -5,9 +5,10 @@
     xmlns:gs="http://namespaces.zope.org/genericsetup"
     i18n_domain="Products.PloneboardNotify">
 
+  <include package="Products.CMFPlone" />
+  <include package="Products.Ploneboard" />
   <include package=".browser" />
   <include package=".events" />
-  <include package="Products.Ploneboard" />
 
   <gs:registerProfile
       name="default"

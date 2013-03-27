@@ -1,8 +1,7 @@
 # -*- coding: utf-8 -*-
 
 from Products.Five.browser import BrowserView
-# from Products.Five.browser.pagetemplatefile import ViewPageTemplateFile
-from Products.Five.browser.pagetemplatefile import ZopeTwoPageTemplateFile # Plone 2.5 compatibility
+from Products.Five.browser.pagetemplatefile import ViewPageTemplateFile
 from Products.CMFCore.utils import getToolByName
 
 from Products.Ploneboard.interfaces import IPloneboard, IForum
@@ -21,10 +20,8 @@ class PloneboardNotificationSystemView(BrowserView):
         if request.form.get("pbn_save"):
             self._updateConfiguration(request.form)
             request.response.redirect(self.context.absolute_url()+"/@@ploneboard_notification")
-        return self.template()
+        return self.index()
     
-    template = ZopeTwoPageTemplateFile("ploneboard_notification.pt")
-
     def _updateConfiguration(self, form):
         """Update saved configuration data"""
         ploneboard_notify_properties = self.portal_properties['ploneboard_notify_properties']

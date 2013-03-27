@@ -4,14 +4,18 @@ Changelog
 0.5.0 (Unreleased)
 ------------------
 
+Dropped Plone 2.5 support
+
 * Added russian translation (thanks to Alison Taylder) [keul]
-* Fixed notify event when an anonymous leave a comment. Now the author is set to "Anonymous" [cekk]
+* Fixed notify event when an anonymous leave a comment.
+  Now the author is set to "Anonymous" [cekk]
 * fix import on recent zope [kiorky]
 
 0.4.1 (2010-04-19)
 ------------------
 
-* Don't try to send notification if PloneboardNotify isn't installed in the Plone site (close #2) [keul]
+* Don't try to send notification if PloneboardNotify
+  isn't installed in the Plone site (close #2) [keul]
 * Forums outside a message board are now supported by the configuration UI [keul]
 * Message boards and forums are now sorted [keul]
 

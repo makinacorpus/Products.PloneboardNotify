@@ -7,6 +7,7 @@ We need to setup something before this file can became a real and working browse
     >>> browser = Browser()
     >>> portal_url = self.portal.absolute_url()
     >>> self.portal.error_log._ignored_exceptions = ()
+    >>> browser.handleErrors = False
     >>> from Products.PloneTestCase.setup import portal_owner, default_password
 
 
@@ -34,10 +35,14 @@ Let's create our first forum area.
     >>> browser.getLink('Message Board').click()
     >>> browser.getControl('Title').value = 'Our forums'
     >>> browser.getControl('Save').click()
+    >>> browser.url == portal_url+'/our-forums'
+    True
 
 Inside the *Message Board* we can add multiple forums. We start with one for now.
 
-    >>> browser.getLink('Add Forum').click()
+    >>> browser.getLink('Add new…').click()
+    >>> browser.getControl('Forum').click()
+    >>> browser.getControl('Add').click()
     >>> browser.getControl('Title').value = 'Cool Music'
     >>> browser.getControl('Save').click()
     >>> portal_url+'/our-forums/cool-music' in browser.url
@@ -45,9 +50,6 @@ Inside the *Message Board* we can add multiple forums. We start with one for now
 
 Now we can go to the "*Ploneboard notification system*".
 
-    >>> # browser.getLink('Site Setup').click()
-    >>> # browser.getLink('Ploneboard notification system').click()    
-    >>> # I go directly to the form due to an HTTP 500 error running test on Plone 2.5
     >>> browser.open(portal_url+'/@@ploneboard_notification')
     >>> 'Ploneboard notifications' in browser.contents
     True
@@ -63,7 +65,6 @@ the "*|bcc*" decoration after every value, to add the message to this recipients
 We used the "*General notify configuration*" section, so an e-mail will be delivered to all address
 at every new message or discussion everywhere in the site. The last address is used for *BCC* section.
 
-
 Using Ploneboard
 ----------------
 
@@ -76,7 +77,7 @@ Now we can go back to our forum and begin a new discussion.
 
 As soon as we confirm the post, an e-mail will be generated.
 
-    >>> browser.getControl('Post comment').click()
+    >>> browser.getControl('Start conversation').click()
     Message subject: New comment added on the forum: Cool Music
     Message text:
     <html>

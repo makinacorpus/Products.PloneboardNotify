@@ -3,8 +3,6 @@
 import zope.interface
 
 from Products.Five.browser import BrowserView
-# from Products.Five.browser.pagetemplatefile import ViewPageTemplateFile
-from Products.Five.browser.pagetemplatefile import ZopeTwoPageTemplateFile # Plone 2.5 compatibility
 from Products.PloneboardNotify.interfaces import ILocalBoardNotify
 
 class PloneboardNotificationSystemView(BrowserView):
@@ -19,10 +17,8 @@ class PloneboardNotificationSystemView(BrowserView):
         if request.form.get("pbn_save"):
             self._updateConfiguration(request.form)
             request.response.redirect(self.context.absolute_url()+"/@@ploneboard_notification")
-        return self.template()
+        return self.index()
     
-    template = ZopeTwoPageTemplateFile("ploneboard_notification_forum.pt")
-
     def _resetLocalConfiguration(self):
         """Remove no more used properties from the context"""
         context = self.context
