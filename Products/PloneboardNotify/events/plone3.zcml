@@ -8,4 +8,5 @@
       zope.app.container.interfaces.IObjectAddedEvent"
       handler=".notify.sendMail"
       zcml:condition="installed Products.PloneboardNotify"/>
+
 </configure>
