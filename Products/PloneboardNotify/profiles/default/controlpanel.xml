@@ -9,6 +9,7 @@
                appId="PloneboardNotificationSystem"
                category="Products"
                condition_expr=""
+               icon_expr="string:$portal_url/++resource++bell_board.gif"
                url_expr="string:${portal_url}/@@ploneboard_notification"
                i18n:attributes="title"
                visible="True">
