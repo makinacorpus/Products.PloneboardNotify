@@ -12,6 +12,7 @@ Dropped Plone 2.5 support
 * fix import on recent zope [kiorky]
 * fixed templates for Plone 4 compatibility [keul]
 * fixed test for running on Plone 4.2 [keul]
+* moved translation to locales directory [keul]
 
 0.4.1 (2010-04-19)
 ------------------

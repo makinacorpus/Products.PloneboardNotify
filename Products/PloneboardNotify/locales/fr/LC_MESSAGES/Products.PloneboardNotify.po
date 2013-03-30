@@ -1,7 +1,7 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: PloneBoardNotify 1.0\n"
-"POT-Creation-Date: 2013-03-30 14:18+0000\n"
+"POT-Creation-Date: 2013-03-30 14:24+0000\n"
 "PO-Revision-Date: 2010-02-01 15:28+0000\n"
 "Last-Translator: N Laurance <nlaurance@zindep.com>\n"
 "Language-Team: Zindep <zindep@zindep.com>\n"
@@ -42,6 +42,7 @@ msgstr "Impossible d'envoyer les notifications"
 msgid "Orphan forums"
 msgstr ""
 
+#: ../profiles/default/controlpanel.xml
 msgid "Ploneboard notification system"
 msgstr "Notifications pour Ploneboard"
 
