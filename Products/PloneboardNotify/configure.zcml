@@ -20,5 +20,12 @@
       description="Ploneboard notification system"
       provides="Products.GenericSetup.interfaces.EXTENSION"
       />
+  <gs:registerProfile
+      name="uninstall"
+      title="Ploneboard Notify uninstallation"
+      directory="profiles/uninstall"
+      description="Remove PloneboardNotify"
+      provides="Products.GenericSetup.interfaces.EXTENSION"
+      />
 
 </configure>

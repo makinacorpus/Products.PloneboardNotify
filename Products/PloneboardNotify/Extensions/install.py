@@ -1,30 +1,12 @@
 # -*- coding: utf-8 -*-
 
-from Products.CMFCore.utils import getToolByName
-from Products.CMFPlone.utils import getFSVersionTuple
-from StringIO import StringIO
+from Products.PloneboardNotify import logger
 
-from Products.PloneboardNotify import config
-
-def install(self, reinstall=False):
-    out = StringIO()
-
-    configPortalSetup(self, out)
-
-    print >> out, "Successfully installed"
-    return out.getvalue()
-
-def configPortalSetup(self, out):
-    """Run GenericSetup steps"""
-    portal_setup=getToolByName(self, "portal_setup")
-
-    if getFSVersionTuple()[:3]>=(3,0,0):
-        portal_setup.runAllImportStepsFromProfile(
-                "profile-Products.%s:default" % config.PROJECTNAME,
-                purge_old=False)
-    else:
-        plone_base_profileid = "profile-CMFPlone:plone"
-        portal_setup.setImportContext(plone_base_profileid)
-        portal_setup.setImportContext("profile-Products.%s:default" % config.PROJECTNAME)
-        portal_setup.runAllImportSteps(purge_old=False)
-        portal_setup.setImportContext(plone_base_profileid)
+def uninstall(portal, reinstall=False):
+    if not reinstall:
+        setup_tool = portal.portal_setup
+        setup_tool.runAllImportStepsFromProfile('profile-Products.PloneboardNotify:uninstall')
+        # manually deleting properties sheet
+        portal.portal_properties.manage_delObjects(['ploneboard_notify_properties'])
+        logger.info("Deleted ploneboard_notify_properties property sheet")
+        logger.info("Uninstallation done")
