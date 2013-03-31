@@ -13,7 +13,6 @@ setup(name='Products.PloneboardNotify',
       # Get more strings from http://www.python.org/pypi?%3Aaction=list_classifiers
       classifiers=[
         "Framework :: Plone",
-        "Framework :: Plone :: 3.3",
         "Framework :: Plone :: 4.0",
         "Framework :: Plone :: 4.1",
         "Framework :: Plone :: 4.2",
@@ -34,7 +33,7 @@ setup(name='Products.PloneboardNotify',
       install_requires=[
           'setuptools',
           'Products.Ploneboard',
-          # -*- Extra requirements: -*-
+          'Products.CMFPlone>4.0b1',
       ],
       tests_require=tests_require,
       extras_require=dict(test=tests_require),

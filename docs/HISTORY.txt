@@ -4,7 +4,7 @@ Changelog
 0.5.0 (Unreleased)
 ------------------
 
-Dropped Plone 2.5 support
+Dropped support for plone 3 and below
 
 * Added russian translation (thanks to Alison Taylder) [keul]
 * Fixed notify event when an anonymous leave a comment.
