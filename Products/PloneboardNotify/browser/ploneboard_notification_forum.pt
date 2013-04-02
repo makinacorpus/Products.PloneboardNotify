@@ -12,7 +12,33 @@
 
 <metal:main fill-slot="main">
 
-<div id="region-content" class="documentContent">
+  <div id="region-content" class="documentContent"
+    
+     tal:define="template_id template/getId;
+                normalizeString nocall:context/@@plone/normalizeString;
+                toLocalizedTime nocall:context/@@plone/toLocalizedTime;
+                portal_properties context/portal_properties;
+                site_properties context/portal_properties/site_properties;
+                here_url context/@@plone_context_state/object_url;
+                portal context/@@plone_portal_state/portal;
+                isAnon context/@@plone_portal_state/anonymous;
+                member context/@@plone_portal_state/member;
+                actions python:context.portal_actions.listFilteredActionsFor(context);
+                mtool context/portal_membership;
+                wtool context/portal_workflow;
+                wf_state context/@@plone_context_state/workflow_state;
+                default_language context/@@plone_portal_state/default_language;
+                is_editable context/@@plone_context_state/is_editable;
+                isContextDefaultPage context/@@plone_context_state/is_default_page;
+                object_title context/@@plone_context_state/object_title;
+                putils context/plone_utils;
+                ztu modules/ZTUtils;
+                ifacetool context/portal_interface;"
+    
+    
+ 
+    
+    >
 
 	<h1 class="documentFirstHeading">
         <span tal:omit-tag=""

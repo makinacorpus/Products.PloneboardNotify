@@ -14,6 +14,7 @@ Tested on
 
 * Plone 2.5 (Ploneboard 1.0)
 * Plone 3.3 (Ploneboard 2.1)
+* Plone 4.2
 
 Plone 2.5: still live
 ---------------------
